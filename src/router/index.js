@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Sites from '../views/Sites.vue'
+import Surveys from '../views/Surveys.vue'
+import SiteSurvey from '../views/SiteSurvey.vue'
 
 import Profile from "../views/Profile.vue";
 import { authGuard } from "../auth/authGuard";
@@ -25,6 +28,24 @@ const routes = [
     path: "/profile",
     name: "profile",
     component: Profile,
+    beforeEnter: authGuard
+  },
+  {
+    path: "/sites",
+    name: "sites",
+    component: Sites,
+    beforeEnter: authGuard
+  },
+  {
+    path: "/surveys",
+    name: "surveys",
+    component: Surveys,
+    beforeEnter: authGuard
+  },
+  {
+    path: "/siteSurvey",
+    name: "siteSurvey",
+    component: SiteSurvey,
     beforeEnter: authGuard
   }
 ]
