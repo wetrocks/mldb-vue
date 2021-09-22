@@ -4,7 +4,7 @@
       <b-nav-item to="/">
         Home
       </b-nav-item>
-      <b-nav-item to="/sites">
+      <b-nav-item to="/site">
         Sites
       </b-nav-item>
       <b-nav-item v-if="$auth.loggedIn" to="/profile">
