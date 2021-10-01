@@ -5,6 +5,13 @@ export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
+  vue: {
+    config: {
+      productionTip: true,
+      devtools: true
+    }
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'mldb',
