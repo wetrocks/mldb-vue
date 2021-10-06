@@ -11,10 +11,10 @@
               <b-form-input id="input-coordinator" v-model="form.coordinator" type="text" placeholder="Survey coordinator" required></b-form-input>
             </b-form-group>
             <b-form-group label="Survey date:" label-for="input-date">
-              <b-form-input id="input-date" v-model="form.date" type="date" required></b-form-input>
+              <b-form-input id="input-date" v-model="form.surveyDate" type="date" required></b-form-input>
             </b-form-group>
             <b-form-group label="Volunteer count:" label-for="input-count">
-              <b-form-input id="input-count" v-model="form.count" type="number" step="1"></b-form-input>
+              <b-form-input id="input-count" v-model="form.volunteerCount" type="number" step="1"></b-form-input>
             </b-form-group>
             <b-button type="submit" variant="primary">Submit</b-button>
           </b-form>
@@ -47,8 +47,8 @@ export default {
       email: null,
       form: {
         coordinator: null,
-        date: null,
-        count: 1
+        surveyDate: null,
+        volunteerCount: 1
       }
     }
   },

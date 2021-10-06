@@ -4,7 +4,7 @@
       <b-link :to="'/site/' + survey.siteId">Back to site page </b-link>
       <b-container>
         <b-row>
-          <b-col>Date: {{ survey.date }}</b-col>
+          <b-col>Date: {{ survey.surveyDate }}</b-col>
           <b-col>Coordinator: {{ survey.coordinator }}</b-col>
         </b-row>
         <b-row>

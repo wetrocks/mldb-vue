@@ -1,7 +1,9 @@
 <template>
   <div>
-    <SurveyInfo v-bind:survey=survey></SurveyInfo>
-    <SurveyLitterTabs v-bind:litterItems=survey.litterItems></SurveyLitterTabs>
+    <SurveyInfo v-bind:survey=currentSurvey></SurveyInfo>
+    <SurveyLitterTabs v-bind:litterItems=currentSurvey.litterItems></SurveyLitterTabs>
+    <p>{{ currentSurvey }}</p>
+    <button @click="saveSurvey">Save</button>
   </div>
 </template>
 
@@ -17,22 +19,37 @@ export default {
       survey: Object
     }
   },
+  computed: {
+    currentSurvey () {
+      return this.$store.state.surveys.currentSurvey
+    }
+  },
   async fetch () {
-    const accessToken = await this.$auth.strategy.token.get()
+    const site = this.siteId
+    const survey = this.id
+    const surveyParams = { siteId: site, surveyId: survey }
 
-    const siteUrl = `http://localhost:5000/site/${this.siteId}/survey/dto/${this.id}`
+    await this.$store.dispatch('surveys/loadCurrentSurvey', surveyParams)
+  },
+  methods: {
+    async saveSurvey (event) {
+      const accessToken = await this.$auth.strategy.token.get()
 
-    this.survey = await this.$axios.get(siteUrl, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-    })
-      .then((response) => {
-        console.log(response.data)
-        return response.data
+      const surveyUrl = `http://localhost:5000/site/${this.siteId}/survey/{$this.id}`
+
+      await this.$axios.put(surveyUrl, this.currentSurvey, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
       })
-
-    this.$store.commit('surveys/setCurrentSurvey', this.survey)
+        .then((response) => {
+          console.log(response.data)
+        })
+        .catch(function (error) {
+          console.log('foooooooo')
+          console.log(error)
+        })
+    }
   }
 }
 </script>
