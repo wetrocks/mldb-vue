@@ -35,7 +35,7 @@ export default {
     async saveSurvey (event) {
       const accessToken = await this.$auth.strategy.token.get()
 
-      const surveyUrl = `http://localhost:5000/site/${this.siteId}/survey/{$this.id}`
+      const surveyUrl = `http://localhost:5000/site/${this.siteId}/survey/${this.id}`
 
       await this.$axios.put(surveyUrl, this.currentSurvey, {
         headers: {
