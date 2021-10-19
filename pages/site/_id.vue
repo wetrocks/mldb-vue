@@ -55,7 +55,7 @@ export default {
   async fetch () {
     const accessToken = await this.$auth.strategy.token.get()
 
-    const siteUrl = `http://localhost:5000/api/site/${this.id}`
+    const siteUrl = `http://localhost:5000/site/${this.id}`
 
     this.site = await this.$axios.get(siteUrl, {
       headers: {
@@ -63,7 +63,6 @@ export default {
       }
     })
       .then((response) => {
-        console.log(response.data)
         return response.data
       })
   },
@@ -81,11 +80,9 @@ export default {
         }
       })
         .then((response) => {
-          console.log(response.data)
           this.surveys.push(response.data)
         })
         .catch(function (error) {
-          console.log('foooooooo')
           console.log(error)
         })
     }

@@ -46,7 +46,6 @@ export default {
           console.log(response.data)
         })
         .catch(function (error) {
-          console.log('foooooooo')
           console.log(error)
         })
     }

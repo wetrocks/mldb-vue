@@ -15,7 +15,7 @@ export const actions = {
   async loadSites ({ commit }) {
     const accessToken = await this.$auth.strategy.token.get()
 
-    this.$axios.get('http://localhost:5000/api/site', {
+    this.$axios.get('http://localhost:5000/site', {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
@@ -27,7 +27,7 @@ export const actions = {
   async createSite ({ commit }, newSite) {
     const accessToken = await this.$auth.strategy.token.get()
 
-    this.$axios.post('http://localhost:5000/api/site', newSite, {
+    this.$axios.post('http://localhost:5000/site', newSite, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
