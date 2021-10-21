@@ -12,6 +12,13 @@ export default {
     }
   },
 
+  publicRuntimeConfig: {
+    mldbApiBase: process.env.MLDB_API_URL_BASE || 'http://localhost:5000'
+  },
+  
+  privateRuntimeConfig: {
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'mldb',

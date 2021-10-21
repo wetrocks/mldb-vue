@@ -1,39 +1,42 @@
 export const state = () => ({
-  siteList: []
+  siteList: [],
 })
 
 export const mutations = {
-  setSites (state, sites) {
+  setSites(state, sites) {
     state.siteList = sites
   },
-  add (state, site) {
+  add(state, site) {
     state.siteList.push(site)
-  }
+  },
 }
 
 export const actions = {
-  async loadSites ({ commit }) {
+  async loadSites({ commit }) {
     const accessToken = await this.$auth.strategy.token.get()
+    const siteUrl = this.$config.mldbApiBase + '/site'
 
-    this.$axios.get('http://localhost:5000/site', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-    })
+    this.$axios
+      .get(siteUrl, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
       .then((response) => {
         commit('setSites', response.data)
       })
   },
-  async createSite ({ commit }, newSite) {
+  async createSite({ commit }, newSite) {
     const accessToken = await this.$auth.strategy.token.get()
 
-    this.$axios.post('http://localhost:5000/site', newSite, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-    })
+    this.$axios
+      .post('http://localhost:5000/site', newSite, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
       .then((response) => {
         commit('add', response.data)
       })
-  }
+  },
 }
