@@ -21,7 +21,7 @@
         </b-modal>
         <p>Surveys</p>
         <ul>
-          <li v-for="survey in site.surveys" :key="survey.id">
+          <li v-for="survey in surveys" :key="survey.id">
             <b-link :to="'/site/' + site.id + '/survey/' + survey.id">
               {{ survey.id }}
             </b-link>
@@ -58,6 +58,15 @@ export default {
     const siteUrl = `http://localhost:5000/site/${this.id}`
 
     this.site = await this.$axios.get(siteUrl, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+      .then((response) => {
+        return response.data
+      })
+
+    this.surveys = await this.$axios.get(siteUrl + '/survey', {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
