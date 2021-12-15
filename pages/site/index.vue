@@ -1,6 +1,19 @@
 <template>
 <div id="app">
   <v-app id="inspire">
+    <div>
+      <v-btn
+        class="mx-2"
+        fab
+        dark
+        color="indigo"
+        to="/site/create"
+      >
+        <v-icon dark>
+          mdi-plus
+        </v-icon>
+      </v-btn>
+    </div>
     <v-card>
       <v-card-title>
         <v-text-field
