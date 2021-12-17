@@ -182,6 +182,96 @@
                 <v-text-field dense label="What is the estimated traffic density (# of ships per year):" v-model=shippingLaneDensity></v-text-field>
             </v-col>
           </v-row>
+          <v-row>
+            <v-col cols="6">
+                <v-text-field dense label="Is it used mainly by merchant ships, fishing vessels, or all kinds:"  v-model=shippingLaneUse></v-text-field>
+            </v-col>
+            <v-col cols="4">
+                <v-text-field dense label="Position in relation to the survey area:" v-model=shippingLanePosition></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="6">
+                <v-text-field dense label="What is the distance from the beach to the nearest harbour:"  v-model=nearestHarbour></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="4">
+                <v-text-field dense label="What is the name of the harbour:" v-model=harbourName></v-text-field>
+            </v-col>
+            <v-col cols="2">
+                <v-text-field dense label="Type of harbor:"  v-model=harbourType></v-text-field>
+            </v-col>
+            <v-col cols="3">
+                <v-text-field dense label="Size of Harbour (# of ship):" v-model=harbourSize></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="7">
+                <v-text-field dense label="What is the distance from the beach to the nearest river mouth (km):" v-model=riverDistance></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="3">
+                <v-text-field dense label="What is the name of the river:"  v-model=riverName></v-text-field>
+            </v-col>
+            <v-col cols="5">
+                <v-text-field dense label="Position of river mouth in relation to survey area:" v-model=harbourPosition></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="7">
+                <v-text-field dense label="Is the beach located near a discharge or discharges of waste water:" v-model=nearDischarge></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="6">
+                <v-text-field dense label="What is the distance from the beach to discharge points:" v-model=dischargeDistance></v-text-field>
+            </v-col>
+            <v-col cols="">
+                <v-text-field dense label="Position of discharge points in relation to survey area:" v-model=dischargePosition></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="4">
+                <v-text-field dense label="How often is the beach cleaned:" v-model=cleanedHowOften></v-text-field>
+            </v-col>
+            <v-col cols="3">
+                <v-text-field dense label="All year around / seasonal:" v-model=cleanedYearRoundOrSeasonal></v-text-field>
+            </v-col>
+            <v-col cols="3">
+                <v-text-field dense label="What method is used:" v-model=cleaningMethod></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="4">
+                <v-text-field dense label="Who's responsible for cleaning:" v-model=responsibleForCleaning></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="7">
+                <v-textarea dense label="Additional comments and observations about this beach:" v-model=additionalComments></v-textarea>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="5">
+                <v-text-field dense label="Is this an amendment to an existing questionnaire:" v-model=cleanedHowOften></v-text-field>
+            </v-col>
+            <v-col cols="3">
+                <v-text-field dense label="Date completed:" v-model=dateCompleted></v-text-field>
+            </v-col>
+         </v-row>
+         <v-row>
+            <v-col cols="3">
+                <v-text-field dense label="Name:" v-model=enteredBy></v-text-field>
+            </v-col>
+            <v-col cols="3">
+                <v-text-field dense label="Phone:" v-model=enteredByPhone></v-text-field>
+            </v-col>
+            <v-col cols="3">
+                <v-text-field dense label="Email:" v-model=enteredByEmail></v-text-field>
+            </v-col>
+          </v-row>
         </v-container>
       </v-card-text>
     </v-card>
@@ -223,7 +313,39 @@ export default {
       seaObjects: null,
       majorUsage: null,
       beachVisitsPerYear: null,
-      beachAccess: null
+      beachAccess: null,
+      nearestTown: null,
+      townPosition: null,
+      townPopulation: null,
+      behindBeachDev: null,
+      foodOnBeach: null,
+      foodDistance: null,
+      foodYearRound: null,
+      foodPosition: null,
+      nearestShippingLane: null,
+      shippingLaneDensity: null,
+      shippingLaneUse: null,
+      shippingLanePosition: null,
+      nearestHarbour: null,
+      harbourName: null,
+      harbourType: null,
+      harbourSize: null,
+      riverDistance: null,
+      riverName: null,
+      riverPosition: null,
+      nearDischarge: null,
+      dischargeDistance: null,
+      dischargePosition: null,
+      cleanedHowOften: null,
+      cleanedYearRoundOrSeasonal: null,
+      cleaningMethod: null,
+      responsibleForCleaning: null,
+      additionalComments: null,
+      amendment: null,
+      dateCompleted: null,
+      enteredBy: null,
+      enteredByPhone: null,
+      enteredByEmail: null
     }
   },
   methods: {
@@ -254,7 +376,39 @@ export default {
         seaObjects: this.seaObjects,
         majorUsage: this.majorUsage,
         beachVisitsPerYear: this.beachVisitsPerYear,
-        beachAccess: this.beachAccess
+        beachAccess: this.beachAccess,
+        nearestTown: this.nearestTown,
+        townPosition: this.townPosition,
+        townPopulation: this.townPopulation,
+        behindBeachDev: this.behindBeachDev,
+        foodOnBeach: this.foodOnBeach,
+        foodDistance: this.foodDistance,
+        foodYearRound: this.foodYearRound,
+        foodPosition: this.foodPosition,
+        nearestShippingLane: this.nearestShippingLane,
+        shippingLaneDensity: this.shippingLaneDensity,
+        shippingLaneUse: this.shippingLaneUse,
+        shippingLanePosition: this.shippingLanePosition,
+        nearestHarbour: this.nearestHarbour,
+        harbourName: this.harbourName,
+        harbourType: this.harbourType,
+        harbourSize: this.harbourSize,
+        riverDistance: this.riverDistance,
+        riverName: this.riverName,
+        riverPosition: this.riverPosition,
+        nearDischarge: this.nearDischarge,
+        dischargeDistance: this.dischargeDistance,
+        dischargePosition: this.dischargePosition,
+        cleanedHowOften: this.cleanedHowOften,
+        cleanedYearRoundOrSeasonal: this.cleanedYearRoundOrSeasonal,
+        cleaningMethod: this.cleaningMethod,
+        responsibleForCleaning: this.responsibleForCleaning,
+        additionalComments: this.additionalComments,
+        amendment: this.amendment,
+        dateCompleted: this.dateCompleted,
+        enteredBy: this.enteredBy,
+        enteredByPhone: this.enteredByPhone,
+        enteredByEmail: this.enteredByEmail
       }
       console.log(newSite)
       this.$store.dispatch('sites/createSite', newSite)
