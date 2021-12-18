@@ -4,19 +4,23 @@
     <v-card>
       <v-card-title>Site Identification</v-card-title>
       <v-card-text>
-        <v-container>
+        <v-container fluid>
           <v-row>
             <v-col cols="3">
-                <v-text-field dense label="Site Name" v-model=siteName ></v-text-field>
+                <v-text-field maxlength=25 counter=25 label="Site Name" v-model=siteName ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="4">
+              <v-select :items="countries" selected="BQ" label="Country" v-model="countryCode"></v-select>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="3">
+                <v-text-field dense maxlength=25 counter=25 label="Beach Code" v-model=beachCode ></v-text-field>
             </v-col>
             <v-col cols="3">
-              <v-text-field dense label="Country" v-model=countryCode ></v-text-field>
-            </v-col>
-            <v-col cols="3">
-                <v-text-field dense label="Beach Code" v-model=beachCode ></v-text-field>
-            </v-col>
-            <v-col cols="3">
-              <v-text-field dense label="Beach Name" v-model=beachName ></v-text-field>
+              <v-text-field dense maxlength=25 counter=25 label="Beach Name" v-model=beachName ></v-text-field>
             </v-col>
           </v-row>
         </v-container>
@@ -28,19 +32,36 @@
       <v-card-text>
         <v-container>
           <v-row>
-            <v-col cols="3">
-                <v-text-field dense label="Width @ mean spring low tide" v-model=lowTideWidth ></v-text-field>
+            <v-col cols="4">
+                <v-text-field
+                            dense
+                            maxlength=4
+                            counter=4
+                            label="Width at mean spring low tide (M):"
+                            type="number"
+                            v-model=lowTideWidth></v-text-field>
             </v-col>
-            <v-col cols="3">
-              <v-text-field dense label="Width @ mean spring high tide" v-model=highTideWidth ></v-text-field>
+            <v-col cols="4">
+               <v-text-field
+                            dense
+                            maxlength=4
+                            counter=4
+                            label="Width at mean spring high tide (M):"
+                            type="number"
+                            v-model=hiTideWidth></v-text-field>
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="3">
-                <v-text-field dense label="Length" v-model=beachLength ></v-text-field>
+            <v-col cols="4">
+                <v-text-field
+                              dense
+                              label="Total beach length (M):"
+                              type="number"
+                              counter=4
+                              v-model=beachLength></v-text-field>
             </v-col>
             <v-col cols="4">
-              <v-text-field dense label="Back of Beach (example dunes)" v-model=beachBack ></v-text-field>
+              <v-text-field dense label="Back of Beach (example dunes):" v-model=beachBack maxlength=50 counter=50></v-text-field>
             </v-col>
           </v-row>
         </v-container>
@@ -345,7 +366,30 @@ export default {
       dateCompleted: null,
       enteredBy: null,
       enteredByPhone: null,
-      enteredByEmail: null
+      enteredByEmail: null,
+      countries: [
+        { value: 'AW', text: 'Aruba' },
+        { value: 'BQ', text: 'Bonaire, Sint Eustatius and Saba', selected: true },
+        { value: 'CW', text: 'Curacao' }
+      ],
+      direction: [
+        { value: 'N', text: 'North' },
+        { value: 'E', text: 'South' },
+        { value: 'S', text: 'East' },
+        { value: 'W', text: 'West' }
+      ],
+      curvature: [
+        { text: 'Concave' },
+        { text: 'Convex' },
+        { text: 'Sinusoidal' },
+        { text: 'Straight' }
+      ],
+      profile: [
+        { text: 'Linear' },
+        { text: 'Concanve' },
+        { text: 'Convex' },
+        { text: 'Mixed' }
+      ]
     }
   },
   methods: {
