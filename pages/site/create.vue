@@ -1,26 +1,54 @@
 <template>
  <div>
     <h3>Create a Site</h3>
+    <v-form>
     <v-card>
       <v-card-title>Site Identification</v-card-title>
       <v-card-text>
         <v-container fluid>
           <v-row>
             <v-col cols="3">
-                <v-text-field maxlength=25 counter=25 label="Site Name" v-model=siteName ></v-text-field>
+                <v-text-field
+                        minlength=25
+                        maxlength=25
+                        counter=25
+                        label="Site Name"
+                        :rules="siteNameRules"
+                        v-model=siteName>
+                </v-text-field>
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="4">
-              <v-select :items="countries" selected="BQ" label="Country" v-model="countryCode"></v-select>
+              <v-select
+                    :items="countries"
+                    selected="BQ"
+                    label="Country"
+                    :rules="countryRules"
+                    v-model="countryCode">
+              </v-select>
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="3">
-                <v-text-field dense maxlength=25 counter=25 label="Beach Code" v-model=beachCode ></v-text-field>
+                <v-text-field
+                        dense
+                        maxlength=10
+                        counter=10
+                        label="Beach Code"
+                        :rules="beachCodeRules"
+                        v-model=beachCode>
+                </v-text-field>
             </v-col>
             <v-col cols="3">
-              <v-text-field dense maxlength=25 counter=25 label="Beach Name" v-model=beachName ></v-text-field>
+              <v-text-field
+                        dense
+                        maxlength=25
+                        counter=25
+                        label="Beach Name"
+                        v-model=beachName
+                        :rules="beachNameRules">
+              </v-text-field>
             </v-col>
           </v-row>
         </v-container>
@@ -39,7 +67,8 @@
                             counter=4
                             label="Width at mean spring low tide (M):"
                             type="number"
-                            v-model=lowTideWidth></v-text-field>
+                            v-model=lowTideWidth>
+                </v-text-field>
             </v-col>
             <v-col cols="4">
                <v-text-field
@@ -107,10 +136,10 @@
         <v-container>
           <v-row>
             <v-col cols="4">
-                <v-text-field dense label="Prevailing currents off the beach" v-model=prevailingCurrent ></v-text-field>
+                <v-combobox :items="direction" multiple label="Prevailing currents off the beach" v-model="prevailingCurrent"></v-combobox>
             </v-col>
             <v-col cols="3">
-                <v-text-field dense label="Prevailing winds" v-model=prevailingWinds ></v-text-field>
+                <v-combobox :items="direction" label="Prevailing winds" v-model="prevailingWinds"></v-combobox>
             </v-col>
           </v-row>
           <v-row>
@@ -290,12 +319,13 @@
                 <v-text-field dense label="Phone:" v-model=enteredByPhone></v-text-field>
             </v-col>
             <v-col cols="3">
-                <v-text-field dense label="Email:" v-model=enteredByEmail></v-text-field>
+                <v-text-field dense label="Email:" :rules=emailRules v-model=enteredByEmail></v-text-field>
             </v-col>
           </v-row>
         </v-container>
       </v-card-text>
     </v-card>
+    </v-form>
     <v-btn
         @click="saveData"
         rounded
@@ -389,6 +419,25 @@ export default {
         { text: 'Concanve' },
         { text: 'Convex' },
         { text: 'Mixed' }
+      ],
+      siteNameRules: [
+        v => !!v || 'Site Name is required',
+        v => (v && v.length <= 26) || 'Site Name must 25 characters or less'
+      ],
+      beachNameRules: [
+        v => !!v || 'Beach Name is required',
+        v => (v && v.length <= 26) || 'Beach Name must 25 characters or less'
+      ],
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
+      ],
+      beachCodeRules: [
+        v => !!v || 'Beach Code is required',
+        v => (v && v.length <= 11) || 'Beach Code must 10 characters or less'
+      ],
+      countryRules: [
+        v => !!v || 'Country is required'
       ]
     }
   },
