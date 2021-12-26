@@ -3,361 +3,410 @@
  <div>
     <h3>Create a Site</h3>
     <v-form>
-    <v-card>
-      <v-card-title>Site Identification</v-card-title>
-      <v-card-text>
-        <v-container fluid>
-          <v-row>
-            <v-col cols="3">
-                <v-text-field
-                        class="font-size"
-                        minlength=25
-                        maxlength=25
-                        counter=25
-                        label="Site Name"
-                        :rules="siteNameRules"
-                        v-model=siteName>
-                </v-text-field>
-            </v-col>
-            <v-col cols="3" class="font-size">
-              <v-select
-                    class="font-size"
-                    :items="countries"
-                    selected="BQ"
-                    label="Country"
-                    :rules="countryRules"
-                    v-model="countryCode">
-              </v-select>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="3">
-                <v-text-field
-                        class="font-size"
-                        dense
-                        maxlength=10
-                        counter=10
-                        label="Beach Code"
-                        :rules="beachCodeRules"
-                        v-model=beachCode>
-                </v-text-field>
-            </v-col>
-            <v-col cols="3">
-              <v-text-field
-                        class="font-size"
-                        dense
-                        maxlength=25
-                        counter=25
-                        label="Beach Name"
-                        v-model=beachName
-                        :rules="beachNameRules">
-              </v-text-field>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-card-text>
-    </v-card>
-    <v-spacer></v-spacer>
-    <v-card>
-    <v-card-title>Beach Information</v-card-title>
-      <v-card-text>
-        <v-container>
-          <v-row>
-            <v-col cols="3">
-                <v-text-field
-                            class="font-size"
-                            dense
-                            :rules="beachMeterRules"
-                            maxlength=3
-                            counter=3
-                            type='number'
-                            label="Width at mean spring low tide (M):"
-                            v-model=lowTideWidth>
-                </v-text-field>
-            </v-col>
-            <v-col cols="3">
-               <v-text-field
-                            class="font-size"
-                            dense
-                            maxlength=3
-                            counter=3
-                            label="Width at mean spring high tide (M):"
-                            :rules="beachMeterRules"
-                            v-model=hiTideWidth></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="3">
-                <v-text-field
+    <v-stepper v-model="e1">
+      <v-stepper-header>
+        <v-stepper-step
+          :complete="e1 > 1"
+          step="1">Site ID
+        </v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step
+          :complete="e1 > 2"
+          step="2">GPS Data
+        </v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step step="3">Beach Stats
+        </v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step step="4">Misc
+        </v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step step="5">Maint
+        </v-stepper-step>
+      </v-stepper-header>
+      <v-stepper-items>
+        <v-stepper-content step="1">
+          <v-card color="grey lighten-5">
+            <v-card-text>
+              <v-container fluid>
+                <v-row>
+                  <v-col cols="3">
+                      <v-text-field
                               class="font-size"
                               dense
-                              label="Total beach length (M):"
-                              type="number"
-                              maxlength=3
-                              counter=3
-                              :rules="beachMeterRules"
-                              v-model=beachLength></v-text-field>
-            </v-col>
-            <v-col cols="5">
-              <v-text-field
-                  class="font-size"
-                  dense
-                  label="Back of Beach (example dunes):"
-                  v-model=beachBack
-                  maxlength=50
-                  counter=50></v-text-field>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-card-text>
-    </v-card>
-    <v-card>
-    <v-card-title>GPS Information</v-card-title>
-      <v-card-text>
-        <v-container>
-          <v-row justify="left">
-            <v-col cols="2">
-                <v-text-field class="font-size" dense label="Coordinates Start 50M" v-model=startGPS ></v-text-field>
-            </v-col>
-            <v-col cols="2">
-                <v-text-field class="font-size" dense label="Coordinates End 50M" v-model=endGPS ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="2">
-                <v-text-field class="font-size" dense label="Coordinates Quadrant 1" v-model=quadrant1 ></v-text-field>
-            </v-col>
-            <v-col cols="2">
-               <v-text-field class="font-size" dense label="Coordinates Quadrant 2" v-model=quadrant2 ></v-text-field>
-            </v-col>
-            <v-col cols="2">
-                <v-text-field class="font-size" dense label="Coordinates Quadrant 3" v-model=quadrant3 ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-          <v-col cols="3">
-                <v-text-field class="font-size" dense label="Coordinates System Used" v-model=coordinationSystem ></v-text-field>
-            </v-col>
-            <v-col cols="2">
-                <v-text-field class="font-size" dense label="Date Measured" v-model=dateGPSPositionMeasured ></v-text-field>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-card-text>
-     </v-card>
-    <v-card>
-    <v-card-title>Beach Stats</v-card-title>
-      <v-card-text>
-        <v-container>
-          <v-row>
-            <v-col cols="3">
-                <v-combobox class="font-size" :items="direction" multiple label="Prevailing currents off the beach" v-model="prevailingCurrent"></v-combobox>
-            </v-col>
-            <v-col cols="3">
-                <v-combobox class="font-size" :items="direction" label="Prevailing winds" v-model="prevailingWinds"></v-combobox>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="6">
-                <v-text-field class="font-size" dense label="When you look from the beach to the sea, what direction is the beach facing?" v-model=beachDirection></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-          <v-col cols="6">
-                <v-text-field class="font-size" dense label="Type of beach material (% coverage, e.g.: 40% sand, 60% pebbles)" v-model=beachMaterial></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-          <v-col cols="3">
-                <v-text-field class="font-size" dense label="Beach Slope (e.g. slope 20%)" v-model=beachTopography></v-text-field>
-            </v-col>
-            <v-col cols="3">
-                <v-text-field class="font-size" dense label="Beach Curvature" v-model=beachCurvature></v-text-field>
-            </v-col>
-            <v-col cols="3">
-                <v-text-field class="font-size" dense label="Horizontal Profile" v-model=horizontalBeachProfile></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-          <v-col cols="6">
-                <v-text-field class="font-size" dense label="Are there any objects in the sea (e.g. a pier) that influence the currents?" v-model=seaObjects></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-          <v-col cols="3">
-                <v-text-field class="font-size" dense label="Major Beach Usage" v-model=majorUsage></v-text-field>
-            </v-col>
-            <v-col cols="3">
-                <v-text-field class="font-size" dense label="Estimated # of person visits per year" v-model=beachVisitsPerYear></v-text-field>
-            </v-col>
-            <v-col cols="3">
-                <v-text-field class="font-size" dense label="Access to the Beach" v-model=beachAccess></v-text-field>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-card-text>
-    </v-card>
-    <v-card>
-    <v-card-title>Please use official data only for the following questions</v-card-title>
-      <v-card-text>
-        <v-container>
-          <v-row>
-            <v-col cols="4">
-                <v-text-field class="font-size" dense label="What is the distance to the nearest town:"  v-model=nearestTown></v-text-field>
-            </v-col>
-            <v-col cols="6">
-                <v-text-field class="font-size" dense label="What is the position of the town in relation to the survey area:" v-model=townPosition></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="4">
-                <v-text-field class="font-size" dense label="What is the (seasonal) population size of this town:" v-model=townPopulation></v-text-field>
-            </v-col>
-            <v-col cols="6">
-                <v-text-field class="font-size" dense label="Is there any development behind the beach:"  v-model=behindBeachDev></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="4">
-                <v-text-field class="font-size" dense label="Are there food/drink outlets on the beach:"  v-model=foodOnBeach></v-text-field>
-            </v-col>
-            <v-col cols="6">
-                <v-text-field class="font-size" dense label="What is the distance from the survey are to the food/drink outlet(km):" v-model=foodDistance></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="4">
-                <v-text-field class="font-size" dense label="Present all year round:"  v-model=foodYearRound></v-text-field>
-            </v-col>
-            <v-col cols="6">
-                <v-text-field class="font-size" dense label="Position of food/drink outlet in relation to the survey area:" v-model=foodPosition></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="5">
-                <v-text-field class="font-size" dense label="Distance from the beach to the nearest shipping lane(km):"  v-model=nearestShippingLane></v-text-field>
-            </v-col>
-            <v-col cols="4">
-                <v-text-field class="font-size" dense label="Estimated # of ships per year:" v-model=shippingLaneDensity></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="5">
-                <v-text-field class="font-size" dense label="Is it used mainly by merchant ships, fishing vessels, or all kinds:"  v-model=shippingLaneUse></v-text-field>
-            </v-col>
-            <v-col cols="4">
-                <v-text-field class="font-size" dense label="Position in relation to the survey area:" v-model=shippingLanePosition></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="4">
-                <v-text-field class="font-size" dense label="Distance from the beach to the nearest harbour:"  v-model=nearestHarbour></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="2">
-                <v-text-field class="font-size" dense label="Name of the harbour:" v-model=harbourName></v-text-field>
-            </v-col>
-            <v-col cols="2">
-                <v-text-field class="font-size" dense label="Type of harbor:"  v-model=harbourType></v-text-field>
-            </v-col>
-            <v-col cols="3">
-                <v-text-field class="font-size" dense label="Size of harbour (# of ships):" v-model=harbourSize></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="5">
-                <v-text-field class="font-size" dense label="Distance from the beach to the nearest river mouth (km):" v-model=riverDistance></v-text-field>
-            </v-col>
-            <v-col cols="2">
-                <v-text-field class="font-size" dense label="Name of the river:"  v-model=riverName></v-text-field>
-            </v-col>
-            <v-col cols="4">
-                <v-text-field class="font-size" dense label="Position of river mouth in relation to survey area:" v-model=harbourPosition></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="5">
-                <v-text-field class="font-size" dense label="Is the beach located near a discharge of waste water:" v-model=nearDischarge></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="4">
-                <v-text-field class="font-size" dense label="Distance from the beach to discharge points:" v-model=dischargeDistance></v-text-field>
-            </v-col>
-            <v-col cols="5">
-                <v-text-field class="font-size" dense label="Position of discharge points in relation to survey area:" v-model=dischargePosition></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="3">
-                <v-text-field class="font-size" dense label="How often is the beach cleaned:" v-model=cleanedHowOften></v-text-field>
-            </v-col>
-            <v-col cols="3">
-                <v-text-field class="font-size" dense label="All year around / seasonal:" v-model=cleanedYearRoundOrSeasonal></v-text-field>
-            </v-col>
-            <v-col cols="3">
-                <v-text-field class="font-size" dense label="What method is used:" v-model=cleaningMethod></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="3">
-                <v-text-field class="font-size" dense label="Who's responsible for cleaning:" v-model=responsibleForCleaning></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="7">
-                <v-textarea class="font-size" dense label="Additional comments and observations about this beach:" v-model=additionalComments></v-textarea>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="4">
-                <v-text-field class="font-size" dense label="Is this an amendment to an existing questionnaire:" v-model=cleanedHowOften></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" md="6">
-              <v-menu
-                v-model="fromDateMenu"
-                :close-on-content-click="false"
-                :nudge-right="40"
-                transition="scale-transition"
-                offset-y
-                max-width="290px"
-                min-width="290px">
-              <template v-slot:activator="{ on }">
-              <v-text-field
-                label="Completed Date"
-                readonly
-                class=font-size
-                :value="completedDateDisp"
-                v-on="on"
-              ></v-text-field>
-              </template>
-              <v-date-picker
-                locale="en-in"
-                v-model="dateCompleted"
-                no-title
-                @input="fromDateMenu = false"
-                :min="minDate"
-              ></v-date-picker>
-            </v-menu>
-            </v-col>
-         </v-row>
-         <v-row>
-            <v-col cols="3">
-                <v-text-field class="font-size" dense label="Name:" v-model=enteredBy></v-text-field>
-            </v-col>
-            <v-col cols="3">
-                <v-text-field class="font-size" dense label="Phone:" v-model=enteredByPhone></v-text-field>
-            </v-col>
-            <v-col cols="3">
-                <v-text-field class="font-size" dense label="Email:" :rules=emailRules v-model=enteredByEmail></v-text-field>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-card-text>
-    </v-card>
+                              minlength=5
+                              maxlength=25
+                              counter=25
+                              label="Site Name"
+                              :rules="siteNameRules"
+                              v-model=siteName>
+                      </v-text-field>
+                  </v-col>
+                  <v-col cols="3" class="font-size">
+                    <v-select
+                          class="font-size"
+                          dense
+                          :items="countries"
+                          selected="BQ"
+                          label="Country"
+                          :rules="countryRules"
+                          v-model="countryCode">
+                    </v-select>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="3">
+                      <v-text-field
+                              class="font-size"
+                              dense
+                              maxlength=10
+                              counter=10
+                              label="Beach Code"
+                              :rules="beachCodeRules"
+                              v-model=beachCode>
+                      </v-text-field>
+                  </v-col>
+                  <v-col cols="3">
+                    <v-text-field
+                              class="font-size"
+                              dense
+                              maxlength=25
+                              counter=25
+                              label="Beach Name"
+                              v-model=beachName
+                              :rules="beachNameRules">
+                    </v-text-field>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+          </v-card>
+          <v-btn
+            color="primary"
+            @click="e1 = 2">
+            Continue
+          </v-btn>
+          <v-btn text>Cancel</v-btn>
+        </v-stepper-content>
+        <v-stepper-content step="2">
+          <v-card color="grey lighten-5">
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col cols="3">
+                      <v-text-field class="font-size" dense label="Coordinates Start 50M" v-model=startGPS ></v-text-field>
+                  </v-col>
+                  <v-col cols="3">
+                      <v-text-field class="font-size" dense label="Coordinates End 50M" v-model=endGPS ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="3">
+                      <v-text-field class="font-size" dense label="Coordinates Quadrant 1" v-model=quadrant1 ></v-text-field>
+                  </v-col>
+                  <v-col cols="3">
+                    <v-text-field class="font-size" dense label="Coordinates Quadrant 2" v-model=quadrant2 ></v-text-field>
+                  </v-col>
+                  <v-col cols="3">
+                      <v-text-field class="font-size" dense label="Coordinates Quadrant 3" v-model=quadrant3 ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                <v-col cols="3">
+                      <v-text-field class="font-size" dense label="Coordinates System Used" v-model=coordinationSystem ></v-text-field>
+                  </v-col>
+                  <v-col cols="3">
+                      <v-text-field class="font-size" dense label="Date Measured" v-model=dateGPSPositionMeasured ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+          </v-card>
+          <v-btn
+            color="primary"
+            @click="e1 = 3">
+            Continue
+          </v-btn>
+          <v-btn text>
+            Cancel
+          </v-btn>
+        </v-stepper-content>
+        <v-stepper-content step="3">
+          <v-card color="grey lighten-5">
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col cols="3">
+                      <v-text-field
+                                  class="font-size"
+                                  dense
+                                  :rules="beachMeterRules"
+                                  maxlength=3
+                                  counter=3
+                                  type='number'
+                                  label="Width at mean spring low tide (M):"
+                                  v-model=lowTideWidth>
+                      </v-text-field>
+                  </v-col>
+                  <v-col cols="3">
+                    <v-text-field
+                                  class="font-size"
+                                  dense
+                                  maxlength=3
+                                  counter=3
+                                  label="Width at mean spring high tide (M):"
+                                  :rules="beachMeterRules"
+                                  v-model=hiTideWidth></v-text-field>
+                  </v-col>
+                  <v-col cols="3">
+                      <v-text-field
+                                    class="font-size"
+                                    dense
+                                    label="Total beach length (M):"
+                                    type="number"
+                                    maxlength=3
+                                    counter=3
+                                    :rules="beachMeterRules"
+                                    v-model=beachLength></v-text-field>
+                  </v-col>
+                  <v-col cols="3">
+                    <v-text-field
+                        class="font-size"
+                        dense
+                        label="Back of Beach (example dunes):"
+                        v-model=beachBack
+                        maxlength=50
+                        counter=50></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="3">
+                      <v-combobox class="font-size" :items="direction" multiple label="Prevailing currents off the beach" v-model="prevailingCurrent"></v-combobox>
+                  </v-col>
+                  <v-col cols="2">
+                      <v-combobox class="font-size" :items="direction" label="Prevailing winds" v-model="prevailingWinds"></v-combobox>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="6">
+                      <v-text-field class="font-size" dense label="Looking from the beach to the sea, what direction is the beach facing?" v-model=beachDirection></v-text-field>
+                  </v-col>
+                  <v-col cols="6">
+                      <v-text-field class="font-size" dense label="Type of beach material (% coverage, e.g.: 40% sand, 60% pebbles)" v-model=beachMaterial></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                <v-col cols="3">
+                      <v-text-field class="font-size" dense label="Beach Slope (e.g. slope 20%)" v-model=beachTopography></v-text-field>
+                  </v-col>
+                  <v-col cols="3">
+                      <v-text-field class="font-size" dense label="Beach Curvature" v-model=beachCurvature></v-text-field>
+                  </v-col>
+                  <v-col cols="3">
+                      <v-text-field class="font-size" dense label="Horizontal Profile" v-model=horizontalBeachProfile></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                <v-col cols="6">
+                      <v-text-field class="font-size" dense label="Are there any objects in the sea (e.g. a pier) that influence the currents?" v-model=seaObjects></v-text-field>
+                  </v-col>
+                <v-col cols="5">
+                  <v-text-field class="font-size" dense label="Is there any development behind the beach:"  v-model=behindBeachDev></v-text-field>
+                </v-col>
+                </v-row>
+                <v-row>
+                <v-col cols="3">
+                      <v-text-field class="font-size" dense label="Major Beach Usage" v-model=majorUsage></v-text-field>
+                  </v-col>
+                  <v-col cols="4">
+                      <v-text-field class="font-size" dense label="Estimated # of person visits per year" v-model=beachVisitsPerYear></v-text-field>
+                  </v-col>
+                  <v-col cols="3">
+                      <v-text-field class="font-size" dense label="Access to the Beach" v-model=beachAccess></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+          </v-card>
+          <v-btn
+            color="primary"
+            @click="e1 = 4">
+            Continue
+          </v-btn>
+          <v-btn text>Cancel</v-btn>
+        </v-stepper-content>
+        <v-stepper-content step="4">
+              <v-card color="grey lighten-5">
+                <v-card-text>
+                  <v-container>
+                    <v-row>
+                      <v-col cols="4">
+                          <v-text-field class="font-size" dense label="What is the distance to the nearest town:"  v-model=nearestTown></v-text-field>
+                      </v-col>
+                      <v-col cols="6">
+                          <v-text-field class="font-size" dense label="What is the position of the town in relation to the survey area:" v-model=townPosition></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="4">
+                          <v-text-field class="font-size" dense label="What is the (seasonal) population size of this town:" v-model=townPopulation></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="4">
+                          <v-text-field class="font-size" dense label="Are there food/drink outlets on the beach:"  v-model=foodOnBeach></v-text-field>
+                      </v-col>
+                      <v-col cols="6">
+                          <v-text-field class="font-size" dense label="What is the distance from the survey are to the food/drink outlet(km):" v-model=foodDistance></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="4">
+                          <v-text-field class="font-size" dense label="Present all year round:"  v-model=foodYearRound></v-text-field>
+                      </v-col>
+                      <v-col cols="6">
+                          <v-text-field class="font-size" dense label="Position of food/drink outlet in relation to the survey area:" v-model=foodPosition></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="5">
+                          <v-text-field class="font-size" dense label="Distance from the beach to the nearest shipping lane(km):"  v-model=nearestShippingLane></v-text-field>
+                      </v-col>
+                      <v-col cols="4">
+                          <v-text-field class="font-size" dense label="Estimated # of ships per year:" v-model=shippingLaneDensity></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="5">
+                          <v-text-field class="font-size" dense label="Is it used mainly by merchant ships, fishing vessels, or all kinds:"  v-model=shippingLaneUse></v-text-field>
+                      </v-col>
+                      <v-col cols="4">
+                          <v-text-field class="font-size" dense label="Position in relation to the survey area:" v-model=shippingLanePosition></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="4">
+                          <v-text-field class="font-size" dense label="Distance from the beach to the nearest harbour:"  v-model=nearestHarbour></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="2">
+                          <v-text-field class="font-size" dense label="Name of the harbour:" v-model=harbourName></v-text-field>
+                      </v-col>
+                      <v-col cols="2">
+                          <v-text-field class="font-size" dense label="Type of harbor:"  v-model=harbourType></v-text-field>
+                      </v-col>
+                      <v-col cols="3">
+                          <v-text-field class="font-size" dense label="Size of harbour (# of ships):" v-model=harbourSize></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="5">
+                          <v-text-field class="font-size" dense label="Distance from the beach to the nearest river mouth (km):" v-model=riverDistance></v-text-field>
+                      </v-col>
+                      <v-col cols="2">
+                          <v-text-field class="font-size" dense label="Name of the river:"  v-model=riverName></v-text-field>
+                      </v-col>
+                      <v-col cols="4">
+                          <v-text-field class="font-size" dense label="Position of river mouth in relation to survey area:" v-model=harbourPosition></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="5">
+                          <v-text-field class="font-size" dense label="Is the beach located near a discharge of waste water:" v-model=nearDischarge></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="4">
+                          <v-text-field class="font-size" dense label="Distance from the beach to discharge points:" v-model=dischargeDistance></v-text-field>
+                      </v-col>
+                      <v-col cols="5">
+                          <v-text-field class="font-size" dense label="Position of discharge points in relation to survey area:" v-model=dischargePosition></v-text-field>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-card-text>
+              </v-card>
+          <v-btn
+            color="primary"
+            @click="e1 = 5">
+            Continue
+          </v-btn>
+          <v-btn text>Cancel</v-btn>
+        </v-stepper-content>
+        <v-stepper-content step="5">
+          <v-card>
+             <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col cols="3">
+                      <v-text-field class="font-size" dense label="How often is the beach cleaned:" v-model=cleanedHowOften></v-text-field>
+                  </v-col>
+                  <v-col cols="3">
+                      <v-text-field class="font-size" dense label="All year around / seasonal:" v-model=cleanedYearRoundOrSeasonal></v-text-field>
+                  </v-col>
+                  <v-col cols="3">
+                      <v-text-field class="font-size" dense label="What method is used:" v-model=cleaningMethod></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="3">
+                      <v-text-field class="font-size" dense label="Who's responsible for cleaning:" v-model=responsibleForCleaning></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="7">
+                      <v-textarea
+                        class="font-size"
+                        maxlength=250
+                        counter=250
+                        dense
+                        label="Additional comments and observations about this beach:"
+                        v-model=additionalComments>
+                      </v-textarea>
+                  </v-col>
+                </v-row>
+                <v-row>
+                    <v-col cols="5">
+                        <v-text-field class="font-size" dense label="Is this an amendment to an existing questionnaire:" v-model=cleanedHowOften></v-text-field>
+                    </v-col>
+                    <v-col cols="2">
+                      <v-menu
+                        v-model="fromDateMenu"
+                        :close-on-content-click="false"
+                        dense
+                        max-width="290px"
+                        min-width="290px">
+                      <template v-slot:activator="{ on }">
+                      <v-text-field
+                        label="Completed Date"
+                        readonly
+                        dense
+                        class=font-size
+                        :value="completedDateDisp"
+                        v-on="on"></v-text-field>
+                      </template>
+                      <v-date-picker
+                        locale="en-in"
+                        v-model="dateCompleted"
+                        no-title
+                        @input="fromDateMenu = false"
+                        :min="minDate"></v-date-picker>
+                    </v-menu>
+                    </v-col>
+                  </v-row>
+              </v-container>
+            </v-card-text>
+          </v-card>
+          <v-btn
+            color="primary"
+            @click="e1 = 6">
+            Submit
+          </v-btn>
+          <v-btn text>Cancel</v-btn>
+        </v-stepper-content>
+      </v-stepper-items>
+    </v-stepper>
     </v-form>
     <v-btn
         @click="saveData"
@@ -373,6 +422,7 @@
 export default {
   data () {
     return {
+      e1: 1,
       siteName: null,
       beachName: null,
       beachCode: null,
