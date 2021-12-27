@@ -14,17 +14,17 @@
           step="2">GPS Data
         </v-stepper-step>
         <v-divider></v-divider>
-        <v-stepper-step step="3">Beach Stats
+        <v-stepper-step step="3" :complete="e1 > 3">Beach Stats
         </v-stepper-step>
         <v-divider></v-divider>
-        <v-stepper-step step="4">Misc
+        <v-stepper-step step="4" :complete="e1 > 4">Misc
         </v-stepper-step>
         <v-divider></v-divider>
-        <v-stepper-step step="5">Maint
+        <v-stepper-step step="5" :complete="e1 > 5">Maint
         </v-stepper-step>
       </v-stepper-header>
       <v-stepper-items>
-        <v-stepper-content step="1">
+      <v-stepper-content step="1">
           <v-form
             ref="step1Form"
             v-model="step1Valid"
@@ -93,6 +93,10 @@
           <v-btn text to="/site">Cancel</v-btn>
         </v-stepper-content>
         <v-stepper-content step="2">
+          <v-form
+            ref="step2Form"
+            v-model="step2Valid"
+            lazy-validation>
           <v-card color="grey lighten-5">
             <v-card-text>
               <v-container>
@@ -126,16 +130,22 @@
               </v-container>
             </v-card-text>
           </v-card>
+          </v-form>
           <v-btn
             color="primary"
             @click="e1 = 3">
             Continue
           </v-btn>
-          <v-btn to="/site" text>
-            Cancel
-          </v-btn>
+          <v-btn
+                @click="e1 = 1"
+                color="primary">Back</v-btn>
+          <v-btn text to="/site">Cancel</v-btn>
         </v-stepper-content>
         <v-stepper-content step="3">
+          <v-form
+            ref="step3Form"
+            v-model="step3Valid"
+            lazy-validation>
           <v-card color="grey lighten-5">
             <v-card-text>
               <v-container>
@@ -232,14 +242,22 @@
               </v-container>
             </v-card-text>
           </v-card>
+          </v-form>
           <v-btn
             color="primary"
             @click="e1 = 4">
             Continue
           </v-btn>
-          <v-btn  to="/site" text>Cancel</v-btn>
+          <v-btn
+                @click="e1 = 2"
+                color="primary">Back</v-btn>
+          <v-btn to="/site" text>Cancel</v-btn>
         </v-stepper-content>
         <v-stepper-content step="4">
+          <v-form
+            ref="step4Form"
+            v-model="step4Valid"
+            lazy-validation>
               <v-card color="grey lighten-5">
                 <v-card-text>
                   <v-container>
@@ -331,14 +349,22 @@
                   </v-container>
                 </v-card-text>
               </v-card>
+          </v-form>
           <v-btn
             color="primary"
             @click="e1 = 5">
             Continue
           </v-btn>
-          <v-btn  to="/site" text>Cancel</v-btn>
+          <v-btn
+                @click="e1 = 3"
+                color="primary">Back</v-btn>
+          <v-btn to="/site" text>Cancel</v-btn>
         </v-stepper-content>
         <v-stepper-content step="5">
+          <v-form
+            ref="step5Form"
+            v-model="step5Valid"
+            lazy-validation>
           <v-card>
              <v-card-text>
               <v-container>
@@ -402,12 +428,16 @@
               </v-container>
             </v-card-text>
           </v-card>
+          </v-form>
           <v-btn
             color="primary"
             @click="e1 = 6">
             Submit
           </v-btn>
-          <v-btn text>Cancel</v-btn>
+          <v-btn
+                @click="e1 = 4"
+                color="primary">Back</v-btn>
+          <v-btn to="/site" text>Cancel</v-btn>
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
@@ -427,6 +457,10 @@ export default {
     return {
       e1: 1,
       step1Valid: true,
+      step2Valid: true,
+      step3Valid: true,
+      step4Valid: true,
+      step5Valid: true,
       siteName: null,
       beachName: null,
       beachCode: null,
@@ -548,7 +582,34 @@ export default {
       if (this.step1Valid) {
         this.e1 = 2
       }
-      console.log(this.e1)
+    },
+    step2Validate () {
+      this.step2Valid = this.$refs.step2Form.validate()
+
+      if (this.step2Valid) {
+        this.e1 = 3
+      }
+    },
+    step3Validate () {
+      this.step3Valid = this.$refs.step3Form.validate()
+
+      if (this.step3Valid) {
+        this.e1 = 4
+      }
+    },
+    step4Validate () {
+      this.step4Valid = this.$refs.step4Form.validate()
+
+      if (this.step4Valid) {
+        this.e1 = 5
+      }
+    },
+    step5Validate () {
+      this.step5Valid = this.$refs.step5Form.validate()
+
+      if (this.step5Valid) {
+        this.e1 = 6
+      }
     },
     saveData () {
       const newSite = {
