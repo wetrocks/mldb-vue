@@ -2,7 +2,6 @@
 <v-app id="inspire">
  <div>
     <h3>Create a Site</h3>
-    <v-form>
     <v-stepper v-model="e1">
       <v-stepper-header>
         <v-stepper-step
@@ -26,6 +25,10 @@
       </v-stepper-header>
       <v-stepper-items>
         <v-stepper-content step="1">
+          <v-form
+            ref="step1Form"
+            v-model="step1Valid"
+            lazy-validation>
           <v-card color="grey lighten-5">
             <v-card-text>
               <v-container fluid>
@@ -81,12 +84,13 @@
               </v-container>
             </v-card-text>
           </v-card>
+          </v-form>
           <v-btn
             color="primary"
-            @click="e1 = 2">
+            @click="step1Validate()">
             Continue
           </v-btn>
-          <v-btn text>Cancel</v-btn>
+          <v-btn text to="/site">Cancel</v-btn>
         </v-stepper-content>
         <v-stepper-content step="2">
           <v-card color="grey lighten-5">
@@ -127,7 +131,7 @@
             @click="e1 = 3">
             Continue
           </v-btn>
-          <v-btn text>
+          <v-btn to="/site" text>
             Cancel
           </v-btn>
         </v-stepper-content>
@@ -233,7 +237,7 @@
             @click="e1 = 4">
             Continue
           </v-btn>
-          <v-btn text>Cancel</v-btn>
+          <v-btn  to="/site" text>Cancel</v-btn>
         </v-stepper-content>
         <v-stepper-content step="4">
               <v-card color="grey lighten-5">
@@ -332,7 +336,7 @@
             @click="e1 = 5">
             Continue
           </v-btn>
-          <v-btn text>Cancel</v-btn>
+          <v-btn  to="/site" text>Cancel</v-btn>
         </v-stepper-content>
         <v-stepper-content step="5">
           <v-card>
@@ -407,7 +411,6 @@
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
-    </v-form>
     <v-btn
         @click="saveData"
         rounded
@@ -423,6 +426,7 @@ export default {
   data () {
     return {
       e1: 1,
+      step1Valid: true,
       siteName: null,
       beachName: null,
       beachCode: null,
@@ -538,6 +542,14 @@ export default {
     }
   },
   methods: {
+    step1Validate () {
+      this.step1Valid = this.$refs.step1Form.validate()
+
+      if (this.step1Valid) {
+        this.e1 = 2
+      }
+      console.log(this.e1)
+    },
     saveData () {
       const newSite = {
         name: this.siteName,
