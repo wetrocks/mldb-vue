@@ -7,8 +7,7 @@
         fab
         dark
         color="indigo"
-        to="/site/create"
-      >
+        to="/site/create">
         <v-icon dark>
           mdi-plus
         </v-icon>

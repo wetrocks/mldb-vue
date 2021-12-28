@@ -14,7 +14,7 @@
           step="2">GPS Data
         </v-stepper-step>
         <v-divider></v-divider>
-        <v-stepper-step step="3" :complete="e1 > 3">Beach Stats
+        <v-stepper-step step="3" :complete="e1 > 3">Beach Info
         </v-stepper-step>
         <v-divider></v-divider>
         <v-stepper-step step="4" :complete="e1 > 4">Misc
@@ -87,6 +87,7 @@
           </v-form>
           <v-btn
             color="primary"
+            :disabled="!step1Valid"
             @click="step1Validate()">
             Continue
           </v-btn>
@@ -133,7 +134,8 @@
           </v-form>
           <v-btn
             color="primary"
-            @click="e1 = 3">
+            :disabled="!step2Valid"
+            @click="step2Validate()">
             Continue
           </v-btn>
           <v-btn
@@ -190,15 +192,30 @@
                         label="Back of Beach (example dunes):"
                         v-model=beachBack
                         maxlength=50
-                        counter=50></v-text-field>
+                        counter=50>
+                    </v-text-field>
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col cols="3">
-                      <v-combobox class="font-size" :items="direction" multiple label="Prevailing currents off the beach" v-model="prevailingCurrent"></v-combobox>
+                      <v-combobox
+                          class="font-size"
+                          :items="direction"
+                          dense
+                          multiple
+                          label="Prevailing currents off the beach"
+                          v-model="prevailingCurrent">
+                      </v-combobox>
                   </v-col>
-                  <v-col cols="2">
-                      <v-combobox class="font-size" :items="direction" label="Prevailing winds" v-model="prevailingWinds"></v-combobox>
+                  <v-col cols="3">
+                      <v-combobox
+                          class="font-size"
+                          multiple
+                          dense
+                          :items="direction"
+                          label="Prevailing winds"
+                          v-model="prevailingWinds">
+                      </v-combobox>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -222,10 +239,13 @@
                 </v-row>
                 <v-row>
                 <v-col cols="6">
-                      <v-text-field class="font-size" dense label="Are there any objects in the sea (e.g. a pier) that influence the currents?" v-model=seaObjects></v-text-field>
+                    <v-text-field class="font-size" dense label="Are there any objects in the sea (e.g. a pier) that influence the currents?" v-model=seaObjects></v-text-field>
                   </v-col>
-                <v-col cols="5">
-                  <v-text-field class="font-size" dense label="Is there any development behind the beach:"  v-model=behindBeachDev></v-text-field>
+                </v-row>
+                <v-row>
+                <v-col cols="6">
+                      <v-switch class="font-size" dense :change="developmentBehindChange()" label="Is there any development behind the beach?" v-model=developmentBehindBeach></v-switch>
+                      <v-text-field class="font-size" dense label="Describe the development:" :disabled="!developmentBehindBeach" v-model=developmentBehindBeachDesc></v-text-field>
                 </v-col>
                 </v-row>
                 <v-row>
@@ -236,7 +256,15 @@
                       <v-text-field class="font-size" dense label="Estimated # of person visits per year" v-model=beachVisitsPerYear></v-text-field>
                   </v-col>
                   <v-col cols="3">
-                      <v-text-field class="font-size" dense label="Access to the Beach" v-model=beachAccess></v-text-field>
+                      <v-combobox
+                          class="font-size"
+                          multiple
+                          dense
+                          :items="beachAccessValues"
+                          label="Access to the Beach"
+                          :rules="beachAccessRules"
+                          v-model="beachAccess">
+                    </v-combobox>
                   </v-col>
                 </v-row>
               </v-container>
@@ -245,7 +273,8 @@
           </v-form>
           <v-btn
             color="primary"
-            @click="e1 = 4">
+            :disabled="!step3Valid"
+            @click="step3Validate()">
             Continue
           </v-btn>
           <v-btn
@@ -262,33 +291,74 @@
                 <v-card-text>
                   <v-container>
                     <v-row>
-                      <v-col cols="4">
+                      <v-col cols="5">
                           <v-text-field class="font-size" dense label="What is the distance to the nearest town:"  v-model=nearestTown></v-text-field>
                       </v-col>
-                      <v-col cols="6">
+                      <v-col cols="5">
                           <v-text-field class="font-size" dense label="What is the position of the town in relation to the survey area:" v-model=townPosition></v-text-field>
                       </v-col>
                     </v-row>
                     <v-row>
-                      <v-col cols="4">
+                      <v-col cols="5">
                           <v-text-field class="font-size" dense label="What is the (seasonal) population size of this town:" v-model=townPopulation></v-text-field>
                       </v-col>
                     </v-row>
                     <v-row>
                       <v-col cols="4">
-                          <v-text-field class="font-size" dense label="Are there food/drink outlets on the beach:"  v-model=foodOnBeach></v-text-field>
+                          <v-switch class="font-size" :change="foodOnBeachChange()" dense label="Are there food/drink outlets on the beach?" v-model=foodOnBeach></v-switch>
                       </v-col>
-                      <v-col cols="6">
-                          <v-text-field class="font-size" dense label="What is the distance from the survey are to the food/drink outlet(km):" v-model=foodDistance></v-text-field>
+                   </v-row>
+                    <v-row>
+                      <v-col cols="5">
+                          <v-text-field
+                            class="font-size"
+                            maxlength=3
+                            counter=3
+                            type='number'
+                            :disabled="!foodOnBeach"
+                            dense
+                            label="Distance from the survey are to the food/drink outlet(km):"
+                            v-model=foodDistance>
+                          </v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="5">
+                        <v-combobox
+                          class="font-size"
+                          :items="direction"
+                          :disabled="!foodOnBeach"
+                          dense
+                          multiple
+                          label="Position of food/drink outlet to the survey area:"
+                          v-model="foodPosition">
+                      </v-combobox>
                       </v-col>
                     </v-row>
                     <v-row>
                       <v-col cols="4">
-                          <v-text-field class="font-size" dense label="Present all year round:"  v-model=foodYearRound></v-text-field>
+                          <v-switch
+                            class="font-size"
+                            :change="foodYearRoundChange()"
+                            :disabled="!foodOnBeach"
+                            dense
+                            label="Present all year round?"
+                            v-model=foodYearRound>
+                          </v-switch>
                       </v-col>
-                      <v-col cols="6">
-                          <v-text-field class="font-size" dense label="Position of food/drink outlet in relation to the survey area:" v-model=foodPosition></v-text-field>
-                      </v-col>
+                    </v-row>
+                    <v-row>
+                    <v-col cols="4">
+                      <v-combobox
+                          class="font-size"
+                          multiple
+                          dense
+                          :disabled="!foodYearRound"
+                          :items="months"
+                          label="Which month(s) is the food outlet present?"
+                          v-model="foodMonths">
+                    </v-combobox>
+                    </v-col>
                     </v-row>
                     <v-row>
                       <v-col cols="5">
@@ -352,7 +422,8 @@
           </v-form>
           <v-btn
             color="primary"
-            @click="e1 = 5">
+            :disabled="!step4Valid"
+            @click="step4Validate()">
             Continue
           </v-btn>
           <v-btn
@@ -431,7 +502,8 @@
           </v-form>
           <v-btn
             color="primary"
-            @click="e1 = 6">
+            :disabled="!step5Valid"
+            @click="step5Validate()">
             Submit
           </v-btn>
           <v-btn
@@ -490,10 +562,12 @@ export default {
       nearestTown: null,
       townPosition: null,
       townPopulation: null,
-      behindBeachDev: null,
-      foodOnBeach: null,
+      developmentBehindBeach: false,
+      developmentBehindBeachDesc: null,
+      foodOnBeach: false,
       foodDistance: null,
-      foodYearRound: null,
+      foodYearRound: false,
+      foodMonths: null,
       foodPosition: null,
       nearestShippingLane: null,
       shippingLaneDensity: null,
@@ -519,6 +593,11 @@ export default {
       enteredBy: null,
       enteredByPhone: null,
       enteredByEmail: null,
+      beachAccessValues: [
+        { text: 'Vehicle' },
+        { text: 'Pedestrian' },
+        { text: 'Boats' }
+      ],
       countries: [
         { value: 'AW', text: 'Aruba' },
         { value: 'BQ', text: 'Bonaire, Sint Eustatius and Saba', selected: true },
@@ -526,8 +605,8 @@ export default {
       ],
       direction: [
         { value: 'N', text: 'North' },
-        { value: 'E', text: 'South' },
-        { value: 'S', text: 'East' },
+        { value: 'S', text: 'South' },
+        { value: 'E', text: 'East' },
         { value: 'W', text: 'West' }
       ],
       curvature: [
@@ -541,6 +620,20 @@ export default {
         { text: 'Concanve' },
         { text: 'Convex' },
         { text: 'Mixed' }
+      ],
+      months: [
+        { text: 'January' },
+        { text: 'February' },
+        { text: 'March' },
+        { text: 'April' },
+        { text: 'May' },
+        { text: 'June' },
+        { text: 'July' },
+        { text: 'August' },
+        { text: 'September' },
+        { text: 'October' },
+        { text: 'November' },
+        { text: 'December' }
       ],
       siteNameRules: [
         v => !!v || 'Site Name is required',
@@ -564,6 +657,8 @@ export default {
       countryRules: [
         v => !!v || 'Country is required'
       ],
+      beachAccessRules: [
+      ],
       fromDateMenu: false,
       fromDateVal: null,
       minDate: '2020-01-05',
@@ -576,7 +671,26 @@ export default {
     }
   },
   methods: {
+    developmentBehindChange () {
+      if (!this.developmentBehindBeach) {
+        this.developmentBehindBeachDesc = null
+      }
+    },
+    foodOnBeachChange () {
+      if (!this.foodOnBeach) {
+        this.foodDistance = null
+        this.foodYearRound = false
+        this.foodPosition = null
+        this.foodMonths = null
+      }
+    },
+    foodYearRoundChange () {
+      if (!this.foodYearRound) {
+        this.foodMonths = null
+      }
+    },
     step1Validate () {
+      console.log(this.step1Valid)
       this.step1Valid = this.$refs.step1Form.validate()
 
       if (this.step1Valid) {
@@ -642,7 +756,8 @@ export default {
         nearestTown: this.nearestTown,
         townPosition: this.townPosition,
         townPopulation: this.townPopulation,
-        behindBeachDev: this.behindBeachDev,
+        developmentBehindBeach: this.developmentBehindBeach,
+        developmentBehindBeachDesc: this.developmentBehindBeachDesc,
         foodOnBeach: this.foodOnBeach,
         foodDistance: this.foodDistance,
         foodYearRound: this.foodYearRound,
