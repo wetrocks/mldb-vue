@@ -204,6 +204,7 @@
                           dense
                           multiple
                           label="Prevailing currents off the beach"
+                          :rules="prevailingCurrentRules"
                           v-model="prevailingCurrent">
                       </v-combobox>
                   </v-col>
@@ -214,13 +215,22 @@
                           dense
                           :items="direction"
                           label="Prevailing winds"
+                          :rules="prevailingWindsRules"
                           v-model="prevailingWinds">
                       </v-combobox>
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col cols="6">
-                      <v-text-field class="font-size" dense label="Looking from the beach to the sea, what direction is the beach facing?" v-model=beachDirection></v-text-field>
+                      <v-combobox
+                          class="font-size"
+                          multiple
+                          dense
+                          :items="direction"
+                          label="Looking from the beach to the sea, what direction is the beach facing?"
+                          :rules="beachDirectionRules"
+                          v-model="beachDirection">
+                        </v-combobox>
                   </v-col>
                   <v-col cols="6">
                       <v-text-field class="font-size" dense label="Type of beach material (% coverage, e.g.: 40% sand, 60% pebbles)" v-model=beachMaterial></v-text-field>
@@ -331,6 +341,7 @@
                           dense
                           multiple
                           label="Position of food/drink outlet to the survey area:"
+                          :rules="foodPositionRules"
                           v-model="foodPosition">
                       </v-combobox>
                       </v-col>
@@ -373,7 +384,15 @@
                           <v-text-field class="font-size" dense label="Is it used mainly by merchant ships, fishing vessels, or all kinds:"  v-model=shippingLaneUse></v-text-field>
                       </v-col>
                       <v-col cols="4">
-                          <v-text-field class="font-size" dense label="Position in relation to the survey area:" v-model=shippingLanePosition></v-text-field>
+                          <v-combobox
+                              class="font-size"
+                              :items="direction"
+                              dense
+                              multiple
+                              label="Position in relation to the survey area:"
+                              :rules="shippingLanePositionRules"
+                              v-model=shippingLanePosition>
+                          </v-combobox>
                       </v-col>
                     </v-row>
                     <v-row>
@@ -548,9 +567,9 @@ export default {
       quadrant3: null,
       coordinationSystem: null,
       dateGPSPositionMeasured: null,
-      prevailingCurrent: null,
-      prevailingWinds: null,
-      beachDirection: null,
+      prevailingCurrent: [],
+      prevailingWinds: [],
+      beachDirection: [],
       beachMaterial: null,
       beachTopography: null,
       beachCurvature: null,
@@ -568,11 +587,11 @@ export default {
       foodDistance: null,
       foodYearRound: false,
       foodMonths: null,
-      foodPosition: null,
+      foodPosition: [],
       nearestShippingLane: null,
       shippingLaneDensity: null,
       shippingLaneUse: null,
-      shippingLanePosition: null,
+      shippingLanePosition: [],
       nearestHarbour: null,
       harbourName: null,
       harbourType: null,
@@ -658,6 +677,22 @@ export default {
         v => !!v || 'Country is required'
       ],
       beachAccessRules: [
+      ],
+      prevailingWindsRules: [
+        v => (v && v.length < 3) || 'Maximum of 2 selections'
+      ],
+      prevailingCurrentRules: [
+        v => (v && v.length < 3) || 'Maximum of 2 selections'
+      ],
+      foodPositionRules: [
+        //  todo - issue with validation on disabled fields
+        //  v => (v && !v.disabled && v.length < 3) || 'Maximum of 2 selections'
+      ],
+      shippingLanePositionRules: [
+        v => (v && v.length < 3) || 'Maximum of 2 selections'
+      ],
+      beachDirectionRules: [
+        v => (v && v.length < 3) || 'Maximum of 2 selections'
       ],
       fromDateMenu: false,
       fromDateVal: null,
