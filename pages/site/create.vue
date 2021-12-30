@@ -372,32 +372,61 @@
                     </v-col>
                     </v-row>
                     <v-row>
-                      <v-col cols="5">
-                          <v-text-field class="font-size" dense label="Distance from the beach to the nearest shipping lane(km):"  v-model=nearestShippingLane></v-text-field>
+                      <v-col cols="6">
+                          <v-text-field
+                            class="font-size"
+                            dense
+                            maxlength=3
+                            counter=3
+                            type='number'
+                            label="Distance from the beach to the nearest shipping lane(km):"
+                            v-model=nearestShippingLane>
+                          </v-text-field>
                       </v-col>
                       <v-col cols="4">
-                          <v-text-field class="font-size" dense label="Estimated # of ships per year:" v-model=shippingLaneDensity></v-text-field>
+                          <v-text-field
+                            class="font-size"
+                            dense
+                            maxlength=6
+                            counter=6
+                            type='number'
+                            label="Estimated # of ships per year:"
+                            v-model=shippingLaneDensity>
+                          </v-text-field>
                       </v-col>
                     </v-row>
                     <v-row>
-                      <v-col cols="5">
-                          <v-text-field class="font-size" dense label="Is it used mainly by merchant ships, fishing vessels, or all kinds:"  v-model=shippingLaneUse></v-text-field>
+                      <v-col cols="6">
+                          <v-text-field
+                            class="font-size"
+                            dense
+                            label="Is it used mainly by merchant ships, fishing vessels, or all kinds:"
+                            v-model=shippingLaneUse>
+                          </v-text-field>
                       </v-col>
-                      <v-col cols="4">
+                      <v-col cols="5">
                           <v-combobox
                               class="font-size"
                               :items="direction"
                               dense
                               multiple
-                              label="Position in relation to the survey area:"
+                              label="Position of shipping lane in relation to the survey area:"
                               :rules="shippingLanePositionRules"
                               v-model=shippingLanePosition>
                           </v-combobox>
                       </v-col>
                     </v-row>
                     <v-row>
-                      <v-col cols="4">
-                          <v-text-field class="font-size" dense label="Distance from the beach to the nearest harbour:"  v-model=nearestHarbour></v-text-field>
+                      <v-col cols="5">
+                          <v-text-field
+                            class="font-size"
+                            dense
+                            label="Distance from the beach to the nearest harbour(km):"
+                            maxlength=6
+                            counter=6
+                            type='number'
+                            v-model=nearestHarbour>
+                          </v-text-field>
                       </v-col>
                     </v-row>
                     <v-row>
@@ -408,18 +437,53 @@
                           <v-text-field class="font-size" dense label="Type of harbor:"  v-model=harbourType></v-text-field>
                       </v-col>
                       <v-col cols="3">
-                          <v-text-field class="font-size" dense label="Size of harbour (# of ships):" v-model=harbourSize></v-text-field>
+                          <v-text-field
+                            class="font-size"
+                            dense
+                            maxlength=6
+                            counter=6
+                            type='number'
+                            label="Size of harbour (# of ships):"
+                            v-model=harbourSize>
+                          </v-text-field>
+                      </v-col>
+                      <v-col cols="4">
+                          <v-combobox
+                              class="font-size"
+                              :items="direction"
+                              dense
+                              multiple
+                              label="Position of harbour in relation to the survey area:"
+                              :rules="harbourPositionRules"
+                              v-model=harbourPosition>
+                          </v-combobox>
                       </v-col>
                     </v-row>
                     <v-row>
                       <v-col cols="5">
-                          <v-text-field class="font-size" dense label="Distance from the beach to the nearest river mouth (km):" v-model=riverDistance></v-text-field>
+                          <v-text-field
+                            class="font-size"
+                            dense
+                            maxlength=6
+                            counter=6
+                            type='number'
+                            label="Distance from the beach to the nearest river mouth(km):"
+                            v-model=riverDistance>
+                          </v-text-field>
                       </v-col>
                       <v-col cols="2">
                           <v-text-field class="font-size" dense label="Name of the river:"  v-model=riverName></v-text-field>
                       </v-col>
                       <v-col cols="4">
-                          <v-text-field class="font-size" dense label="Position of river mouth in relation to survey area:" v-model=harbourPosition></v-text-field>
+                          <v-combobox
+                              class="font-size"
+                              :items="direction"
+                              dense
+                              multiple
+                              label="Position of river mouth in relation to survey area:"
+                              :rules="riverPositionRules"
+                              v-model=riverPosition>
+                          </v-combobox>
                       </v-col>
                     </v-row>
                     <v-row>
@@ -429,10 +493,26 @@
                     </v-row>
                     <v-row>
                       <v-col cols="4">
-                          <v-text-field class="font-size" dense label="Distance from the beach to discharge points:" v-model=dischargeDistance></v-text-field>
+                          <v-text-field
+                            class="font-size"
+                            dense
+                            maxlength=6
+                            counter=6
+                            type='number'
+                            label="Distance from the beach to discharge points(km):"
+                            v-model=dischargeDistance>
+                          </v-text-field>
                       </v-col>
                       <v-col cols="5">
-                          <v-text-field class="font-size" dense label="Position of discharge points in relation to survey area:" v-model=dischargePosition></v-text-field>
+                          <v-combobox
+                              class="font-size"
+                              :items="direction"
+                              dense
+                              multiple
+                              label="Position of discharge points in relation to survey area:"
+                              :rules="dischargePositionRules"
+                              v-model=dischargePosition>
+                          </v-combobox>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -459,17 +539,47 @@
              <v-card-text>
               <v-container>
                 <v-row>
-                  <v-col cols="3">
-                      <v-text-field class="font-size" dense label="How often is the beach cleaned:" v-model=cleanedHowOften></v-text-field>
-                  </v-col>
-                  <v-col cols="3">
-                      <v-text-field class="font-size" dense label="All year around / seasonal:" v-model=cleanedYearRoundOrSeasonal></v-text-field>
-                  </v-col>
-                  <v-col cols="3">
-                      <v-text-field class="font-size" dense label="What method is used:" v-model=cleaningMethod></v-text-field>
+                  <v-col cols="4">
+                      <span class="font-size">How often is the beach cleaned?</span>
                   </v-col>
                 </v-row>
                 <v-row>
+                  <v-col cols="4">
+                    <v-radio-group
+                      v-model="cleanedYearRoundOrSeasonal"
+                      row>
+                      <v-radio
+                        class="font-size"
+                        label="Year Round"
+                        value="yearRound">
+                      </v-radio>
+                      <v-radio
+                        class="font-size"
+                        label="Seasonal"
+                        value="seasonal">
+                      </v-radio>
+                    </v-radio-group>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="4">
+                      <v-select
+                          class="font-size"
+                          :items="cleaningFrequency"
+                          dense
+                          label="What is the frequency the beach is cleaned?"
+                          :rules="cleanedHowOftenRules"
+                          v-model=cleanedHowOften>
+                      </v-select>
+                  </v-col>
+                  <v-col cols="5">
+                      <v-text-field class="font-size" dense label="For 'other', please specify:" :disabled="cleanedOtherDisabled()" v-model=cleanedOther></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="3">
+                      <v-text-field class="font-size" dense label="What method is used:" v-model=cleaningMethod></v-text-field>
+                  </v-col>
                   <v-col cols="3">
                       <v-text-field class="font-size" dense label="Who's responsible for cleaning:" v-model=responsibleForCleaning></v-text-field>
                   </v-col>
@@ -488,7 +598,7 @@
                 </v-row>
                 <v-row>
                     <v-col cols="5">
-                        <v-text-field class="font-size" dense label="Is this an amendment to an existing questionnaire:" v-model=cleanedHowOften></v-text-field>
+                        <v-text-field class="font-size" dense label="Is this an amendment to an existing questionnaire:" v-model=amendment></v-text-field>
                     </v-col>
                     <v-col cols="2">
                       <v-menu
@@ -577,7 +687,7 @@ export default {
       seaObjects: null,
       majorUsage: null,
       beachVisitsPerYear: null,
-      beachAccess: null,
+      beachAccess: [],
       nearestTown: null,
       townPosition: null,
       townPopulation: null,
@@ -596,14 +706,17 @@ export default {
       harbourName: null,
       harbourType: null,
       harbourSize: null,
+      harbourPosition: [],
       riverDistance: null,
       riverName: null,
-      riverPosition: null,
+      riverPosition: [],
       nearDischarge: null,
       dischargeDistance: null,
-      dischargePosition: null,
+      dischargePosition: [],
       cleanedHowOften: null,
       cleanedYearRoundOrSeasonal: null,
+      cleanedMonths: null,
+      cleanedOther: null,
       cleaningMethod: null,
       responsibleForCleaning: null,
       additionalComments: null,
@@ -639,6 +752,12 @@ export default {
         { text: 'Concanve' },
         { text: 'Convex' },
         { text: 'Mixed' }
+      ],
+      cleaningFrequency: [
+        { text: 'Daily' },
+        { text: 'Weekly' },
+        { text: 'Monthly' },
+        { text: 'Other' }
       ],
       months: [
         { text: 'January' },
@@ -678,6 +797,8 @@ export default {
       ],
       beachAccessRules: [
       ],
+      cleanedHowOftenRules: [
+      ],
       prevailingWindsRules: [
         v => (v && v.length < 3) || 'Maximum of 2 selections'
       ],
@@ -689,6 +810,15 @@ export default {
         //  v => (v && !v.disabled && v.length < 3) || 'Maximum of 2 selections'
       ],
       shippingLanePositionRules: [
+        v => (v && v.length < 3) || 'Maximum of 2 selections'
+      ],
+      harbourPositionRules: [
+        v => (v && v.length < 3) || 'Maximum of 2 selections'
+      ],
+      riverPositionRules: [
+        v => (v && v.length < 3) || 'Maximum of 2 selections'
+      ],
+      dischargePositionRules: [
         v => (v && v.length < 3) || 'Maximum of 2 selections'
       ],
       beachDirectionRules: [
@@ -711,6 +841,14 @@ export default {
         this.developmentBehindBeachDesc = null
       }
     },
+    cleanedOtherDisabled () {
+      if (this.cleanedHowOften === 'Other' || this.cleanedHowOften === '') {
+        return false
+      } else {
+        this.cleanedOther = null
+        return true
+      }
+    },
     foodOnBeachChange () {
       if (!this.foodOnBeach) {
         this.foodDistance = null
@@ -724,8 +862,14 @@ export default {
         this.foodMonths = null
       }
     },
+    cleanedHowOftenChange () {
+      if (!this.cleanedHowOften === 'Other') {
+        return true
+      } else {
+        return false
+      }
+    },
     step1Validate () {
-      console.log(this.step1Valid)
       this.step1Valid = this.$refs.step1Form.validate()
 
       if (this.step1Valid) {
@@ -805,6 +949,7 @@ export default {
         harbourName: this.harbourName,
         harbourType: this.harbourType,
         harbourSize: this.harbourSize,
+        harbourPosition: this.harbourPosition,
         riverDistance: this.riverDistance,
         riverName: this.riverName,
         riverPosition: this.riverPosition,
@@ -812,6 +957,8 @@ export default {
         dischargeDistance: this.dischargeDistance,
         dischargePosition: this.dischargePosition,
         cleanedHowOften: this.cleanedHowOften,
+        cleanedOther: this.cleanedOther,
+        cleanedMonths: this.cleanedMonths,
         cleanedYearRoundOrSeasonal: this.cleanedYearRoundOrSeasonal,
         cleaningMethod: this.cleaningMethod,
         responsibleForCleaning: this.responsibleForCleaning,
