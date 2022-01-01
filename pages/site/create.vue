@@ -302,15 +302,36 @@
                   <v-container>
                     <v-row>
                       <v-col cols="5">
-                          <v-text-field class="font-size" dense label="What is the distance to the nearest town:"  v-model=nearestTown></v-text-field>
+                          <v-text-field
+                            class="font-size"
+                            type='number'
+                            maxLength='3'
+                            counter='3'
+                            dense
+                            label="What is the distance to the nearest town(km):"
+                            v-model=nearestTown>
+                          </v-text-field>
                       </v-col>
-                      <v-col cols="5">
-                          <v-text-field class="font-size" dense label="What is the position of the town in relation to the survey area:" v-model=townPosition></v-text-field>
+                      <v-col cols="4">
+                          <v-combobox
+                              class="font-size"
+                              :items="direction"
+                              dense
+                              multiple
+                              label="Position of town in relation to survey area:"
+                              :rules="townPositionRules"
+                              v-model=townPosition>
+                          </v-combobox>
                       </v-col>
                     </v-row>
                     <v-row>
                       <v-col cols="5">
-                          <v-text-field class="font-size" dense label="What is the (seasonal) population size of this town:" v-model=townPopulation></v-text-field>
+                          <v-text-field
+                          class="font-size"
+                          dense
+                          label="What is the (seasonal) population size of this town:"
+                          v-model=townPopulation>
+                        </v-text-field>
                       </v-col>
                     </v-row>
                     <v-row>
@@ -539,12 +560,8 @@
              <v-card-text>
               <v-container>
                 <v-row>
-                  <v-col cols="4">
-                      <span class="font-size">How often is the beach cleaned?</span>
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-col cols="4">
+                  <v-col cols="12">
+                      <span dense class="font-size">How often is the beach cleaned?</span>
                     <v-radio-group
                       v-model="cleanedYearRoundOrSeasonal"
                       row>
@@ -556,9 +573,23 @@
                       <v-radio
                         class="font-size"
                         label="Seasonal"
+                        :change="SeasonalChange()"
                         value="seasonal">
                       </v-radio>
                     </v-radio-group>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="4">
+                    <v-combobox
+                          class="font-size"
+                          multiple
+                          dense
+                          :disabled="SeasonalChange()"
+                          :items="months"
+                          label="If seasonal, please specify which months:"
+                          v-model="cleanedMonths">
+                      </v-combobox>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -573,15 +604,36 @@
                       </v-select>
                   </v-col>
                   <v-col cols="5">
-                      <v-text-field class="font-size" dense label="For 'other', please specify:" :disabled="cleanedOtherDisabled()" v-model=cleanedOther></v-text-field>
+                    <v-text-field
+                          class="font-size"
+                          dense
+                          counter="50"
+                          maxLength="50"
+                          label="For 'other', please specify:"
+                          :disabled="cleanedOtherDisabled()"
+                          v-model=cleanedOther>
+                      </v-text-field>
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col cols="3">
-                      <v-text-field class="font-size" dense label="What method is used:" v-model=cleaningMethod></v-text-field>
+                  <v-col cols="4">
+                      <v-select
+                          class="font-size"
+                          :items="cleaningMethods"
+                          dense
+                          label="What method is used?"
+                          v-model=cleaningMethod>
+                      </v-select>
                   </v-col>
-                  <v-col cols="3">
-                      <v-text-field class="font-size" dense label="Who's responsible for cleaning:" v-model=responsibleForCleaning></v-text-field>
+                  <v-col cols="5">
+                      <v-text-field
+                          class="font-size"
+                          counter="50"
+                          maxLength="50"
+                          dense
+                          label="Who's responsible for cleaning:"
+                          v-model=responsibleForCleaning>
+                      </v-text-field>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -598,7 +650,7 @@
                 </v-row>
                 <v-row>
                     <v-col cols="5">
-                        <v-text-field class="font-size" dense label="Is this an amendment to an existing questionnaire:" v-model=amendment></v-text-field>
+                        <v-checkbox class="font-size" reverse dense label="Is this an amendment to an existing questionnaire?" v-model=amendment></v-checkbox>
                     </v-col>
                     <v-col cols="2">
                       <v-menu
@@ -715,7 +767,7 @@ export default {
       dischargePosition: [],
       cleanedHowOften: null,
       cleanedYearRoundOrSeasonal: null,
-      cleanedMonths: null,
+      cleanedMonths: [],
       cleanedOther: null,
       cleaningMethod: null,
       responsibleForCleaning: null,
@@ -758,6 +810,10 @@ export default {
         { text: 'Weekly' },
         { text: 'Monthly' },
         { text: 'Other' }
+      ],
+      cleaningMethods: [
+        { text: 'Manual' },
+        { text: 'Mechanical' }
       ],
       months: [
         { text: 'January' },
@@ -803,6 +859,9 @@ export default {
         v => (v && v.length < 3) || 'Maximum of 2 selections'
       ],
       prevailingCurrentRules: [
+        v => (v && v.length < 3) || 'Maximum of 2 selections'
+      ],
+      townPositionRules: [
         v => (v && v.length < 3) || 'Maximum of 2 selections'
       ],
       foodPositionRules: [
@@ -860,6 +919,14 @@ export default {
     foodYearRoundChange () {
       if (!this.foodYearRound) {
         this.foodMonths = null
+      }
+    },
+    SeasonalChange () {
+      if (this.cleanedYearRoundOrSeasonal === 'seasonal') {
+        return false
+      } else {
+        this.cleanedMonths = null
+        return true
       }
     },
     cleanedHowOftenChange () {
