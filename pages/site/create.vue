@@ -85,13 +85,15 @@
             </v-card-text>
           </v-card>
           </v-form>
-          <v-btn
-            color="primary"
-            :disabled="!step1Valid"
-            @click="step1Validate()">
-            Continue
-          </v-btn>
-          <v-btn text to="/site">Cancel</v-btn>
+            <v-btn
+              class="mt-6 mr-2"
+              color="primary"
+              rounded
+              :disabled="!step1Valid"
+              @click="step1Validate()">
+              Continue
+            </v-btn>
+            <v-btn rounded class="mt-6" text to="/site">Cancel</v-btn>
         </v-stepper-content>
         <v-stepper-content step="2">
           <v-form
@@ -133,15 +135,19 @@
           </v-card>
           </v-form>
           <v-btn
+            class="mt-6 mr-2"
+            rounded
             color="primary"
             :disabled="!step2Valid"
             @click="step2Validate()">
             Continue
           </v-btn>
           <v-btn
-                @click="e1 = 1"
-                color="primary">Back</v-btn>
-          <v-btn text to="/site">Cancel</v-btn>
+            rounded
+            class="mt-6 mr-2"
+            @click="e1 = 1"
+            color="primary">Back</v-btn>
+          <v-btn rounded class="mt-6" text to="/site">Cancel</v-btn>
         </v-stepper-content>
         <v-stepper-content step="3">
           <v-form
@@ -241,10 +247,22 @@
                       <v-text-field class="font-size" dense label="Beach Slope (e.g. slope 20%)" v-model=beachTopography></v-text-field>
                   </v-col>
                   <v-col cols="3">
-                      <v-text-field class="font-size" dense label="Beach Curvature" v-model=beachCurvature></v-text-field>
+                      <v-select
+                        class="font-size"
+                        dense
+                        label="Beach Curvature"
+                        :items="curvature"
+                        v-model="beachCurvature">
+                      </v-select>
                   </v-col>
                   <v-col cols="3">
-                      <v-text-field class="font-size" dense label="Horizontal Profile" v-model=horizontalBeachProfile></v-text-field>
+                    <v-select
+                        class="font-size"
+                        dense
+                        label="Horizontal Profile"
+                        :items="profiles"
+                        v-model="horizontalBeachProfile">
+                      </v-select>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -282,15 +300,19 @@
           </v-card>
           </v-form>
           <v-btn
+            class="mt-6 mr-2"
+            rounded
             color="primary"
             :disabled="!step3Valid"
             @click="step3Validate()">
             Continue
           </v-btn>
           <v-btn
-                @click="e1 = 2"
-                color="primary">Back</v-btn>
-          <v-btn to="/site" text>Cancel</v-btn>
+            rounded
+            class="mt-6 mr-2"
+            @click="e1 = 2"
+            color="primary">Back</v-btn>
+         <v-btn rounded class="mt-6" text to="/site">Cancel</v-btn>
         </v-stepper-content>
         <v-stepper-content step="4">
           <v-form
@@ -541,15 +563,19 @@
               </v-card>
           </v-form>
           <v-btn
+            class="mt-6 mr-2"
+            rounded
             color="primary"
             :disabled="!step4Valid"
             @click="step4Validate()">
             Continue
           </v-btn>
           <v-btn
-                @click="e1 = 3"
-                color="primary">Back</v-btn>
-          <v-btn to="/site" text>Cancel</v-btn>
+            rounded
+            class="mt-6 mr-2"
+            @click="e1 = 3"
+            color="primary">Back</v-btn>
+          <v-btn rounded class="mt-6" text to="/site">Cancel</v-btn>
         </v-stepper-content>
         <v-stepper-content step="5">
           <v-form
@@ -682,24 +708,22 @@
           </v-card>
           </v-form>
           <v-btn
+            class="mt-6 mr-2"
+            rounded
             color="primary"
             :disabled="!step5Valid"
             @click="step5Validate()">
             Submit
           </v-btn>
           <v-btn
-                @click="e1 = 4"
-                color="primary">Back</v-btn>
-          <v-btn to="/site" text>Cancel</v-btn>
+            rounded
+            class="mt-6 mr-2"
+            @click="e1 = 4"
+            color="primary">Back</v-btn>
+          <v-btn rounded class="mt-6" text to="/site">Cancel</v-btn>
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
-    <v-btn
-        @click="saveData"
-        rounded
-        color="primary"
-        dark>Create Site
-    </v-btn>
   </div>
 </v-app>
 </template>
@@ -799,7 +823,7 @@ export default {
         { text: 'Sinusoidal' },
         { text: 'Straight' }
       ],
-      profile: [
+      profiles: [
         { text: 'Linear' },
         { text: 'Concanve' },
         { text: 'Convex' },
@@ -969,6 +993,7 @@ export default {
 
       if (this.step5Valid) {
         this.e1 = 6
+        this.saveData()
       }
     },
     saveData () {
