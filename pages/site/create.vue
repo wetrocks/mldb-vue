@@ -210,7 +210,7 @@
                           dense
                           multiple
                           label="Prevailing currents off the beach"
-                          :rules="prevailingCurrentRules"
+                          :rules="maxTwoSelectedRules"
                           v-model="prevailingCurrent">
                       </v-combobox>
                   </v-col>
@@ -221,7 +221,7 @@
                           dense
                           :items="direction"
                           label="Prevailing winds"
-                          :rules="prevailingWindsRules"
+                          :rules="maxTwoSelectedRules"
                           v-model="prevailingWinds">
                       </v-combobox>
                   </v-col>
@@ -234,7 +234,7 @@
                           dense
                           :items="direction"
                           label="Looking from the beach to the sea, what direction is the beach facing?"
-                          :rules="beachDirectionRules"
+                          :rules="maxTwoSelectedRules"
                           v-model="beachDirection">
                         </v-combobox>
                   </v-col>
@@ -341,7 +341,7 @@
                               dense
                               multiple
                               label="Position of town in relation to survey area:"
-                              :rules="townPositionRules"
+                              :rules="maxTwoSelectedRules"
                               v-model=townPosition>
                           </v-combobox>
                       </v-col>
@@ -384,7 +384,6 @@
                           dense
                           multiple
                           label="Position of food/drink outlet to the survey area:"
-                          :rules="foodPositionRules"
                           v-model="foodPosition">
                       </v-combobox>
                       </v-col>
@@ -454,7 +453,7 @@
                               dense
                               multiple
                               label="Position of shipping lane in relation to the survey area:"
-                              :rules="shippingLanePositionRules"
+                              :rules="maxTwoSelectedRules"
                               v-model=shippingLanePosition>
                           </v-combobox>
                       </v-col>
@@ -497,7 +496,7 @@
                               dense
                               multiple
                               label="Position of harbour in relation to the survey area:"
-                              :rules="harbourPositionRules"
+                              :rules="maxTwoSelectedRules"
                               v-model=harbourPosition>
                           </v-combobox>
                       </v-col>
@@ -524,7 +523,7 @@
                               dense
                               multiple
                               label="Position of river mouth in relation to survey area:"
-                              :rules="riverPositionRules"
+                              :rules="maxTwoSelectedRules"
                               v-model=riverPosition>
                           </v-combobox>
                       </v-col>
@@ -553,7 +552,7 @@
                               dense
                               multiple
                               label="Position of discharge points in relation to survey area:"
-                              :rules="dischargePositionRules"
+                              :rules="maxTwoSelectedRules"
                               v-model=dischargePosition>
                           </v-combobox>
                       </v-col>
@@ -879,32 +878,7 @@ export default {
       ],
       cleanedHowOftenRules: [
       ],
-      prevailingWindsRules: [
-        v => (v && v.length < 3) || 'Maximum of 2 selections'
-      ],
-      prevailingCurrentRules: [
-        v => (v && v.length < 3) || 'Maximum of 2 selections'
-      ],
-      townPositionRules: [
-        v => (v && v.length < 3) || 'Maximum of 2 selections'
-      ],
-      foodPositionRules: [
-        // todo - issue with validation on disabled fields
-        // v => (v && !v.disabled && v.length < 3) || 'Maximum of 2 selections'
-      ],
-      shippingLanePositionRules: [
-        v => (v && v.length < 3) || 'Maximum of 2 selections'
-      ],
-      harbourPositionRules: [
-        v => (v && v.length < 3) || 'Maximum of 2 selections'
-      ],
-      riverPositionRules: [
-        v => (v && v.length < 3) || 'Maximum of 2 selections'
-      ],
-      dischargePositionRules: [
-        v => (v && v.length < 3) || 'Maximum of 2 selections'
-      ],
-      beachDirectionRules: [
+      maxTwoSelectedRules: [
         v => (v && v.length < 3) || 'Maximum of 2 selections'
       ],
       fromDateMenu: false,
@@ -916,6 +890,10 @@ export default {
   computed: {
     completedDateDisp () {
       return this.dateCompleted
+    },
+    prevailingWindString () {
+      console.log(this.prevailingWinds.map(x => x.text).join())
+      return this.prevailingWinds.map(x => x.text).join()
     }
   },
   methods: {
@@ -1012,56 +990,56 @@ export default {
         quadrant1: this.quadrant1,
         quadrant2: this.quadrant2,
         quadrant3: this.quadrant3,
-        coordinationSystem: this.coordinationSystem,
-        dateGPSPositionMeasured: this.dateGPSPositionMeasured,
-        prevailingCurrent: this.prevailingCurrent,
-        prevailingWinds: this.prevailingWinds,
-        beachDirection: this.beachDirection,
-        beachMaterial: this.beachMaterial,
-        beachTopography: this.beachTopography,
-        beachCurvature: this.beachCurvature,
-        horizontalBeachProfile: this.horizontalBeachProfile,
-        seaObjects: this.seaObjects,
-        majorUsage: this.majorUsage,
-        beachVisitsPerYear: this.beachVisitsPerYear,
-        beachAccess: this.beachAccess,
-        nearestTown: this.nearestTown,
-        townPosition: this.townPosition,
-        townPopulation: this.townPopulation,
-        developmentBehindBeach: this.developmentBehindBeach,
-        developmentBehindBeachDesc: this.developmentBehindBeachDesc,
-        foodOnBeach: this.foodOnBeach,
-        foodDistance: this.foodDistance,
-        foodYearRound: this.foodYearRound,
-        foodMonths: this.foodMonths,
-        foodPosition: this.foodPosition,
-        nearestShippingLane: this.nearestShippingLane,
-        shippingLaneDensity: this.shippingLaneDensity,
-        shippingLaneUse: this.shippingLaneUse,
-        shippingLanePosition: this.shippingLanePosition,
-        nearestHarbour: this.nearestHarbour,
-        harbourName: this.harbourName,
-        harbourType: this.harbourType,
-        harbourSize: this.harbourSize,
-        harbourPosition: this.harbourPosition,
-        riverDistance: this.riverDistance,
-        riverName: this.riverName,
-        riverPosition: this.riverPosition,
-        nearDischarge: this.nearDischarge,
-        dischargeDistance: this.dischargeDistance,
-        dischargePosition: this.dischargePosition,
-        cleanedHowOften: this.cleanedHowOften,
-        cleanedOther: this.cleanedOther,
-        cleanedMonths: this.cleanedMonths,
-        cleanedYearRoundOrSeasonal: this.cleanedYearRoundOrSeasonal,
-        cleaningMethod: this.cleaningMethod,
-        responsibleForCleaning: this.responsibleForCleaning,
-        additionalComments: this.additionalComments,
-        amendment: this.amendment,
-        dateCompleted: this.dateCompleted,
-        enteredBy: this.enteredBy,
-        enteredByPhone: this.enteredByPhone,
-        enteredByEmail: this.enteredByEmail
+        // coordinationSystem: this.coordinationSystem,
+        // dateGPSPositionMeasured: this.dateGPSPositionMeasured,
+        // prevailingCurrent: this.prevailingCurrent,
+        prevailingWinds: this.prevailingWindString
+        // beachDirection: this.beachDirection,
+        // beachMaterial: this.beachMaterial,
+        // beachTopography: this.beachTopography,
+        // beachCurvature: this.beachCurvature,
+        // horizontalBeachProfile: this.horizontalBeachProfile,
+        // seaObjects: this.seaObjects,
+        // majorUsage: this.majorUsage,
+        // beachVisitsPerYear: this.beachVisitsPerYear,
+        // beachAccess: this.beachAccess,
+        // nearestTown: this.nearestTown,
+        // townPosition: this.townPosition,
+        // townPopulation: this.townPopulation,
+        // developmentBehindBeach: this.developmentBehindBeach,
+        // developmentBehindBeachDesc: this.developmentBehindBeachDesc,
+        // foodOnBeach: this.foodOnBeach,
+        // foodDistance: this.foodDistance,
+        // foodYearRound: this.foodYearRound,
+        // foodMonths: this.foodMonths,
+        // foodPosition: this.foodPosition,
+        // nearestShippingLane: this.nearestShippingLane,
+        // shippingLaneDensity: this.shippingLaneDensity,
+        // shippingLaneUse: this.shippingLaneUse,
+        // shippingLanePosition: this.shippingLanePosition,
+        // nearestHarbour: this.nearestHarbour,
+        // harbourName: this.harbourName,
+        // harbourType: this.harbourType,
+        // harbourSize: this.harbourSize,
+        // harbourPosition: this.harbourPosition,
+        // riverDistance: this.riverDistance,
+        // riverName: this.riverName,
+        // riverPosition: this.riverPosition,
+        // nearDischarge: this.nearDischarge,
+        // dischargeDistance: this.dischargeDistance,
+        // dischargePosition: this.dischargePosition,
+        // cleanedHowOften: this.cleanedHowOften,
+        // cleanedOther: this.cleanedOther,
+        // cleanedMonths: this.cleanedMonths,
+        // cleanedYearRoundOrSeasonal: this.cleanedYearRoundOrSeasonal,
+        // cleaningMethod: this.cleaningMethod,
+        // responsibleForCleaning: this.responsibleForCleaning,
+        // additionalComments: this.additionalComments,
+        // amendment: this.amendment,
+        // dateCompleted: this.dateCompleted,
+        // enteredBy: this.enteredBy,
+        // enteredByPhone: this.enteredByPhone,
+        // enteredByEmail: this.enteredByEmail
       }
       console.log(JSON.stringify(newSite))
       this.$store.dispatch('sites/createSite', newSite)
