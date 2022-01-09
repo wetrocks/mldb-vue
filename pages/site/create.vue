@@ -763,16 +763,16 @@ export default {
       seaObjects: null,
       majorUsage: null,
       beachVisitsPerYear: null,
-      beachAccess: [],
+      beachAccess: null,
       nearestTown: null,
-      townPosition: null,
+      townPosition: [],
       townPopulation: null,
       developmentBehindBeach: false,
       developmentBehindBeachDesc: null,
       foodOnBeach: false,
       foodDistance: null,
       foodYearRound: false,
-      foodMonths: null,
+      foodMonths: [],
       foodPosition: [],
       nearestShippingLane: null,
       shippingLaneDensity: null,
@@ -807,15 +807,15 @@ export default {
         { text: 'Boats' }
       ],
       countries: [
-        { value: 'AW', text: 'Aruba' },
-        { value: 'BQ', text: 'Bonaire, Sint Eustatius and Saba', selected: true },
-        { value: 'CW', text: 'Curacao' }
+        { text: 'Aruba' },
+        { text: 'Bonaire, Sint Eustatius and Saba', selected: true },
+        { text: 'Curacao' }
       ],
       direction: [
-        { value: 'N', text: 'North' },
-        { value: 'S', text: 'South' },
-        { value: 'E', text: 'East' },
-        { value: 'W', text: 'West' }
+        { text: 'North' },
+        { text: 'South' },
+        { text: 'East' },
+        { text: 'West' }
       ],
       curvature: [
         { text: 'Concave' },
@@ -889,8 +889,8 @@ export default {
         v => (v && v.length < 3) || 'Maximum of 2 selections'
       ],
       foodPositionRules: [
-        //  todo - issue with validation on disabled fields
-        //  v => (v && !v.disabled && v.length < 3) || 'Maximum of 2 selections'
+        // todo - issue with validation on disabled fields
+        // v => (v && !v.disabled && v.length < 3) || 'Maximum of 2 selections'
       ],
       shippingLanePositionRules: [
         v => (v && v.length < 3) || 'Maximum of 2 selections'
@@ -994,6 +994,7 @@ export default {
       if (this.step5Valid) {
         this.e1 = 6
         this.saveData()
+        console.log('post save')
       }
     },
     saveData () {
@@ -1032,6 +1033,7 @@ export default {
         foodOnBeach: this.foodOnBeach,
         foodDistance: this.foodDistance,
         foodYearRound: this.foodYearRound,
+        foodMonths: this.foodMonths,
         foodPosition: this.foodPosition,
         nearestShippingLane: this.nearestShippingLane,
         shippingLaneDensity: this.shippingLaneDensity,
@@ -1061,7 +1063,7 @@ export default {
         enteredByPhone: this.enteredByPhone,
         enteredByEmail: this.enteredByEmail
       }
-      console.log(newSite)
+      console.log(JSON.stringify(newSite))
       this.$store.dispatch('sites/createSite', newSite)
     }
   }
