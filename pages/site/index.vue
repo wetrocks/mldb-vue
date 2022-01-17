@@ -13,9 +13,9 @@
       </tr>
       <tr v-for="site in sites" :key="site.id">
         <td>
-          <b-link :to="'site/' + site.id">
+          <NuxtLink :to="'site/' + site.id">
             {{ site.name }}
-          </b-link>
+          </NuxtLink>
         </td>
         <td> {{ site.createTimestamp }} </td>
         <td> {{ site.createdBy }} </td>
