@@ -40,6 +40,7 @@
         navItems: [
           { icon: "mdi-home", text: "Dashboard", link: "/" },
           { icon: "mdi-beach", text: "Sites", link: "/site" },
+          { icon: "mdi-clipboard-text-multiple-outline", text: "Litter Types", link: "/litterTypes" },
           { icon: "mdi-account", text: "Profile", link: "/profile" },
           { icon: "mdi-chart-line", text: "Reports", link: "/reports" },
         ],
