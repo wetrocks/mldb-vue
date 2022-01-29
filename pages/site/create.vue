@@ -178,7 +178,7 @@
                                   counter=3
                                   label="Width at mean spring high tide (M):"
                                   :rules="beachMeterRules"
-                                  v-model=hiTideWidth></v-text-field>
+                                  v-model=highTideWidth></v-text-field>
                   </v-col>
                   <v-col cols="3">
                       <v-text-field
@@ -762,7 +762,7 @@ export default {
       seaObjects: null,
       majorUsage: null,
       beachVisitsPerYear: null,
-      beachAccess: null,
+      beachAccess: [],
       nearestTown: null,
       townPosition: [],
       townPopulation: null,
@@ -824,7 +824,7 @@ export default {
       ],
       profiles: [
         { text: 'Linear' },
-        { text: 'Concanve' },
+        { text: 'Concave' },
         { text: 'Convex' },
         { text: 'Mixed' }
       ],
@@ -892,8 +892,40 @@ export default {
       return this.dateCompleted
     },
     prevailingWindString () {
-      console.log(this.prevailingWinds.map(x => x.text).join())
       return this.prevailingWinds.map(x => x.text).join()
+    },
+    prevailingCurrentString () {
+      return this.prevailingCurrent.map(x => x.text).join()
+    },
+    beachDirectionString () {
+      return this.beachDirection.map(x => x.text).join()
+    },
+    townPositionString () {
+      return this.townPosition.map(x => x.text).join()
+    },
+    shippingLanePositionString () {
+      return this.shippingLanePosition.map(x => x.text).join()
+    },
+    harbourPositionString () {
+      return this.harbourPosition.map(x => x.text).join()
+    },
+    riverPositionString () {
+      return this.riverPosition.map(x => x.text).join()
+    },
+    dischargePositionString () {
+      return this.dischargePosition.map(x => x.text).join()
+    },
+    cleanedMonthsString () {
+      return this.cleanedMonths.map(x => x.text).join()
+    },
+    foodMonthsString () {
+      return this.foodMonths.map(x => x.text).join()
+    },
+    beachAccessString () {
+      return this.beachAccess.map(x => x.text).join()
+    },
+    foodPositionString () {
+      return this.foodPosition.map(x => x.text).join()
     }
   },
   methods: {
@@ -990,56 +1022,56 @@ export default {
         quadrant1: this.quadrant1,
         quadrant2: this.quadrant2,
         quadrant3: this.quadrant3,
-        // coordinationSystem: this.coordinationSystem,
-        // dateGPSPositionMeasured: this.dateGPSPositionMeasured,
-        // prevailingCurrent: this.prevailingCurrent,
-        prevailingWinds: this.prevailingWindString
-        // beachDirection: this.beachDirection,
-        // beachMaterial: this.beachMaterial,
-        // beachTopography: this.beachTopography,
-        // beachCurvature: this.beachCurvature,
-        // horizontalBeachProfile: this.horizontalBeachProfile,
-        // seaObjects: this.seaObjects,
-        // majorUsage: this.majorUsage,
-        // beachVisitsPerYear: this.beachVisitsPerYear,
-        // beachAccess: this.beachAccess,
-        // nearestTown: this.nearestTown,
-        // townPosition: this.townPosition,
-        // townPopulation: this.townPopulation,
-        // developmentBehindBeach: this.developmentBehindBeach,
-        // developmentBehindBeachDesc: this.developmentBehindBeachDesc,
-        // foodOnBeach: this.foodOnBeach,
-        // foodDistance: this.foodDistance,
-        // foodYearRound: this.foodYearRound,
-        // foodMonths: this.foodMonths,
-        // foodPosition: this.foodPosition,
-        // nearestShippingLane: this.nearestShippingLane,
-        // shippingLaneDensity: this.shippingLaneDensity,
-        // shippingLaneUse: this.shippingLaneUse,
-        // shippingLanePosition: this.shippingLanePosition,
-        // nearestHarbour: this.nearestHarbour,
-        // harbourName: this.harbourName,
-        // harbourType: this.harbourType,
-        // harbourSize: this.harbourSize,
-        // harbourPosition: this.harbourPosition,
-        // riverDistance: this.riverDistance,
-        // riverName: this.riverName,
-        // riverPosition: this.riverPosition,
-        // nearDischarge: this.nearDischarge,
-        // dischargeDistance: this.dischargeDistance,
-        // dischargePosition: this.dischargePosition,
-        // cleanedHowOften: this.cleanedHowOften,
-        // cleanedOther: this.cleanedOther,
-        // cleanedMonths: this.cleanedMonths,
-        // cleanedYearRoundOrSeasonal: this.cleanedYearRoundOrSeasonal,
-        // cleaningMethod: this.cleaningMethod,
-        // responsibleForCleaning: this.responsibleForCleaning,
-        // additionalComments: this.additionalComments,
-        // amendment: this.amendment,
-        // dateCompleted: this.dateCompleted,
-        // enteredBy: this.enteredBy,
-        // enteredByPhone: this.enteredByPhone,
-        // enteredByEmail: this.enteredByEmail
+        coordinationSystem: this.coordinationSystem,
+        dateGPSPositionMeasured: this.dateGPSPositionMeasured,
+        prevailingCurrent: this.prevailingCurrentString,
+        prevailingWinds: this.prevailingWindString,
+        beachDirection: this.beachDirectionString,
+        beachMaterial: this.beachMaterial,
+        beachTopography: this.beachTopography,
+        beachCurvature: this.beachCurvature,
+        horizontalBeachProfile: this.horizontalBeachProfile,
+        seaObjects: this.seaObjects,
+        majorUsage: this.majorUsage,
+        beachVisitsPerYear: this.beachVisitsPerYear,
+        beachAccess: this.beachAccessString,
+        nearestTown: this.nearestTown,
+        townPosition: this.townPositionString,
+        townPopulation: this.townPopulation,
+        developmentBehindBeach: this.developmentBehindBeach,
+        developmentBehindBeachDesc: this.developmentBehindBeachDesc,
+        foodOnBeach: this.foodOnBeach,
+        foodDistance: this.foodDistance,
+        foodYearRound: this.foodYearRound,
+        // foodMonths: this.foodMonthsString,
+        // foodPosition: this.foodPositionString,
+        nearestShippingLane: this.nearestShippingLane,
+        shippingLaneDensity: this.shippingLaneDensity,
+        shippingLaneUse: this.shippingLaneUse,
+        shippingLanePosition: this.shippingLanePositionStrkng,
+        nearestHarbour: this.nearestHarbour,
+        harbourName: this.harbourName,
+        harbourType: this.harbourType,
+        harbourSize: this.harbourSize,
+        harbourPosition: this.harbourPositionString,
+        riverDistance: this.riverDistance,
+        riverName: this.riverName,
+        riverPosition: this.riverPositionString,
+        nearDischarge: this.nearDischarge,
+        dischargeDistance: this.dischargeDistance,
+        dischargePosition: this.dischargePositionString,
+        cleanedHowOften: this.cleanedHowOften,
+        cleanedOther: this.cleanedOther,
+        // cleanedMonths: this.cleanedMonthsString,
+        cleanedYearRoundOrSeasonal: this.cleanedYearRoundOrSeasonal,
+        cleaningMethod: this.cleaningMethod,
+        responsibleForCleaning: this.responsibleForCleaning,
+        additionalComments: this.additionalComments,
+        amendment: this.amendment,
+        dateCompleted: this.dateCompleted,
+        enteredBy: this.enteredBy,
+        enteredByPhone: this.enteredByPhone,
+        enteredByEmail: this.enteredByEmail
       }
       console.log(JSON.stringify(newSite))
       this.$store.dispatch('sites/createSite', newSite)
